@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    mk_media media = mk_media_create("__defaultVhost__", "live", "test", 0, 0, 0);
+    mk_media media = mk_media_create("192.168.31.127", "live", "test", 0, 0, 0);
     // h264的codec  [AUTO-TRANSLATED:940c6a32]
     // h264 codec
     //mk_media_init_video(media, 0, 0, 0, 0, 2 * 104 * 1024);

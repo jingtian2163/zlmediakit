@@ -15,6 +15,7 @@
 #include "Common/config.h"
 #include "Player/MediaPlayer.h"
 #include "Extension/Frame.h"
+#include "rtmpPush.h"
 
 using namespace std;
 using namespace toolkit;
@@ -188,6 +189,8 @@ JNI_API(jboolean, startDemo, jstring ini_dir){
             mINI::Instance()["rtsp.port"] = 8554;
             mINI::Instance()["rtsp.sslport"] = 8332;
             mINI::Instance()["general.enableVhost"] = 0;
+            mINI::Instance()["rtsp.lowLatency"] = 1;
+            mINI::Instance()["rtsp.rtpMaxSize"] = 1024;
             for (auto &pr : mINI::Instance()) {
                 //替换hook默认地址
                 replace(pr.second, "https://127.0.0.1/", "http://127.0.0.1:8080/");
@@ -197,9 +200,27 @@ JNI_API(jboolean, startDemo, jstring ini_dir){
             //默认打开http api调试
             mINI::Instance()["api.apiDebug"] = 1;
 
+            // // 创建定时器
+            // auto poller = EventPollerPool::Instance().getPoller();
+            //  // 设置延时任务
+            // poller->doDelayTask(3000, [=](){
+            //     // 初始化推流器
+            //     auto pusher = RtspPusherWrapper::getInstance();
+            //     if(pusher->initPusher("rtsp://101.43.53.16/live/stream")) {
+            //         // 再等待1秒确保连接建立
+            //         poller->doDelayTask(1000, [=](){
+            //             // 推送测试帧
+            //             pusher->testPushIFrame();
+            //             return 0;
+            //         });
+            //     }
+            //     return 0;
+            // });
+
             int argc = 5;
             const char *argv[] = {"", "-c", ini_file.data(), "-s", pem_file.data()};
             start_main(argc, (char **) argv);
+
         } catch (std::exception &ex) {
             WarnL << ex.what();
         }

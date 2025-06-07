@@ -1,0 +1,723 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineSystem.cmake:228 (message)"
+      - "CMakeLists.txt:30 (project)"
+    message: |
+      The target system is: Android - 1 - aarch64
+      The host system is: Darwin - 21.6.0 - arm64
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:30 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat "
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_a2368/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_a2368.dir/build.make CMakeFiles/cmTC_a2368.dir/build
+        Building C object CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat   -fPIE   -v -MD -MT CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c
+        Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin
+        Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -mnoexecstack -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mthread-model posix -mdisable-fp-elim -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu generic -target-feature +neon -target-abi aapcs -mllvm -aarch64-fix-cortex-a53-835769=1 -fallow-half-arguments-and-returns -dwarf-column-info -debug-info-kind=limited -dwarf-version=4 -debugger-tuning=gdb -target-linker-version 241.9 -v -ffunction-sections -fdata-sections -coverage-notes-file /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU/CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.gcno -resource-dir /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7 -dependency-file CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o.d -sys-header-deps -MT CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -D ANDROID -isysroot /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include -Wformat -fdebug-compilation-dir /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU -ferror-limit 19 -fmessage-length 0 -stack-protector 2 -fno-signed-char -fobjc-runtime=gcc -fdiagnostics-show-option -o CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 8.0.7 based upon LLVM 8.0.7svn default target x86_64-apple-darwin21.6.0
+        ignoring nonexistent directory "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include
+        End of search list.
+        Linking C executable cmTC_a2368
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a2368.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat   -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections  -v CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -o cmTC_a2368 
+        Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin
+        Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/bin/ld" --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -pie -EL --fix-cortex-a53-843419 -z now -z relro --hash-style=both --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_a2368 /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libatomic.a --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:30 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        implicit include dirs: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:30 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld\\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_a2368/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_a2368.dir/build.make CMakeFiles/cmTC_a2368.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa --noexecstack -Wformat   -fPIE   -v -MD -MT CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -mnoexecstack -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mthread-model posix -mdisable-fp-elim -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu generic -target-feature +neon -target-abi aapcs -mllvm -aarch64-fix-cortex-a53-835769=1 -fallow-half-arguments-and-returns -dwarf-column-info -debug-info-kind=limited -dwarf-version=4 -debugger-tuning=gdb -target-linker-version 241.9 -v -ffunction-sections -fdata-sections -coverage-notes-file /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU/CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.gcno -resource-dir /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7 -dependency-file CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o.d -sys-header-deps -MT CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -D ANDROID -isysroot /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include -Wformat -fdebug-compilation-dir /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-7lN9IU -ferror-limit 19 -fmessage-length 0 -stack-protector 2 -fno-signed-char -fobjc-runtime=gcc -fdiagnostics-show-option -o CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 8.0.7 based upon LLVM 8.0.7svn default target x86_64-apple-darwin21.6.0]
+        ignore line: [ignoring nonexistent directory "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_a2368]
+        ignore line: [/opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a2368.dir/link.txt --verbose=1]
+        ignore line: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa --noexecstack -Wformat   -Wl --exclude-libs libgcc.a -Wl --exclude-libs libatomic.a -static-libstdc++ -Wl --build-id -Wl --warn-shared-textrel -Wl --fatal-warnings -Wl --no-undefined -Qunused-arguments -Wl -z noexecstack -Wl --gc-sections  -v CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -o cmTC_a2368 ]
+        ignore line: [Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/bin/ld" --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -pie -EL --fix-cortex-a53-843419 -z now -z relro --hash-style=both --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_a2368 /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libatomic.a --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+          arg [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/bin/ld] ==> ignore
+          arg [--sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-EL] ==> ignore
+          arg [--fix-cortex-a53-843419] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--enable-new-dtags] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [aarch64linux] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/system/bin/linker64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_a2368] ==> ignore
+          arg [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o] ==> obj [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+          arg [--exclude-libs] ==> ignore
+          arg [libgcc.a] ==> ignore
+          arg [--exclude-libs] ==> ignore
+          arg [libatomic.a] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--warn-shared-textrel] ==> ignore
+          arg [--fatal-warnings] ==> ignore
+          arg [--no-undefined] ==> ignore
+          arg [-znoexecstack] ==> ignore
+          arg [--gc-sections] ==> ignore
+          arg [CMakeFiles/cmTC_a2368.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [-ldl] ==> lib [dl]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-ldl] ==> lib [dl]
+          arg [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o] ==> obj [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib64]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit libs: [gcc;dl;c;gcc;dl]
+        implicit objs: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        implicit dirs: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib64;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:30 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat  "
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8a443/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_8a443.dir/build.make CMakeFiles/cmTC_8a443.dir/build
+        Building CXX object CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat    -fPIE   -v -MD -MT CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin
+        Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -mnoexecstack -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mthread-model posix -mdisable-fp-elim -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu generic -target-feature +neon -target-abi aapcs -mllvm -aarch64-fix-cortex-a53-835769=1 -fallow-half-arguments-and-returns -dwarf-column-info -debug-info-kind=limited -dwarf-version=4 -debugger-tuning=gdb -target-linker-version 241.9 -v -ffunction-sections -fdata-sections -coverage-notes-file /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW/CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.gcno -resource-dir /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7 -dependency-file CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o.d -sys-header-deps -MT CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -D ANDROID -isysroot /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1 -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include -Wformat -fdeprecated-macro -fdebug-compilation-dir /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW -ferror-limit 19 -fmessage-length 0 -stack-protector 2 -fno-signed-char -fobjc-runtime=gcc -fcxx-exceptions -fexceptions -fdiagnostics-show-option -o CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 8.0.7 based upon LLVM 8.0.7svn default target x86_64-apple-darwin21.6.0
+        ignoring nonexistent directory "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android
+         /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include
+        End of search list.
+        Linking CXX executable cmTC_8a443
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8a443.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat    -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections  -v CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8a443 
+        Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)
+        Target: aarch64-none-linux-android21
+        Thread model: posix
+        InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin
+        Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/bin/ld" --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -pie -EL --fix-cortex-a53-843419 -z now -z relro --hash-style=both --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_8a443 /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libatomic.a --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm -lgcc -ldl -lc -lgcc -ldl /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:30 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android]
+          add: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android]
+        collapse include dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        implicit include dirs: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:30 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld\\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8a443/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_8a443.dir/build.make CMakeFiles/cmTC_8a443.dir/build]
+        ignore line: [Building CXX object CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa --noexecstack -Wformat    -fPIE   -v -MD -MT CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" -cc1 -triple aarch64-none-linux-android21 -emit-obj -mrelax-all -mnoexecstack -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mthread-model posix -mdisable-fp-elim -masm-verbose -mconstructor-aliases -munwind-tables -fuse-init-array -target-cpu generic -target-feature +neon -target-abi aapcs -mllvm -aarch64-fix-cortex-a53-835769=1 -fallow-half-arguments-and-returns -dwarf-column-info -debug-info-kind=limited -dwarf-version=4 -debugger-tuning=gdb -target-linker-version 241.9 -v -ffunction-sections -fdata-sections -coverage-notes-file /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW/CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.gcno -resource-dir /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7 -dependency-file CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o.d -sys-header-deps -MT CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -D ANDROID -isysroot /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1 -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include -internal-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include -internal-externc-isystem /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include -Wformat -fdeprecated-macro -fdebug-compilation-dir /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-sLKRrW -ferror-limit 19 -fmessage-length 0 -stack-protector 2 -fno-signed-char -fobjc-runtime=gcc -fcxx-exceptions -fexceptions -fdiagnostics-show-option -o CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 8.0.7 based upon LLVM 8.0.7svn default target x86_64-apple-darwin21.6.0]
+        ignore line: [ignoring nonexistent directory "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/local/include]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/include]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/aarch64-linux-android]
+        ignore line: [ /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_8a443]
+        ignore line: [/opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8a443.dir/link.txt --verbose=1]
+        ignore line: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa --noexecstack -Wformat    -Wl --exclude-libs libgcc.a -Wl --exclude-libs libatomic.a -static-libstdc++ -Wl --build-id -Wl --warn-shared-textrel -Wl --fatal-warnings -Wl --no-undefined -Qunused-arguments -Wl -z noexecstack -Wl --gc-sections  -v CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8a443 ]
+        ignore line: [Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)]
+        ignore line: [Target: aarch64-none-linux-android21]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin]
+        ignore line: [Found candidate GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Selected GCC installation: /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/bin/ld" --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -pie -EL --fix-cortex-a53-843419 -z now -z relro --hash-style=both --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_8a443 /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21 -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libatomic.a --build-id --warn-shared-textrel --fatal-warnings --no-undefined -z noexecstack --gc-sections CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm -lgcc -ldl -lc -lgcc -ldl /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+          arg [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/bin/ld] ==> ignore
+          arg [--sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-EL] ==> ignore
+          arg [--fix-cortex-a53-843419] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [--hash-style=both] ==> ignore
+          arg [--enable-new-dtags] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [aarch64linux] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/system/bin/linker64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_8a443] ==> ignore
+          arg [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o] ==> obj [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib]
+          arg [-L/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib] ==> dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+          arg [--exclude-libs] ==> ignore
+          arg [libgcc.a] ==> ignore
+          arg [--exclude-libs] ==> ignore
+          arg [libatomic.a] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--warn-shared-textrel] ==> ignore
+          arg [--fatal-warnings] ==> ignore
+          arg [--no-undefined] ==> ignore
+          arg [-znoexecstack] ==> ignore
+          arg [--gc-sections] ==> ignore
+          arg [CMakeFiles/cmTC_8a443.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-Bstatic] ==> search static
+          arg [-lc++] ==> lib [c++]
+          arg [-Bdynamic] ==> search dynamic
+          arg [-lm] ==> lib [m]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-ldl] ==> lib [dl]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-ldl] ==> lib [dl]
+          arg [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o] ==> obj [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib64]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib]
+        collapse library dir [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib] ==> [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit libs: [c++;m;gcc;dl;c;gcc;dl]
+        implicit objs: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtbegin_dynamic.o;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21/crtend_android.o]
+        implicit dirs: [/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib64/clang/8.0.7/lib/linux/aarch64;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/lib/gcc/aarch64-linux-android/4.9.x;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib64;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/21;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/aarch64-linux-android/lib;/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckCXXSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "cmake/FindMYSQL.cmake:112 (check_cxx_source_compiles)"
+      - "CMakeLists.txt:417 (find_package)"
+    checks:
+      - "Performing Test HAVE_MYSQL_OPT_EMBEDDED_CONNECTION"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-xBEtlx"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-xBEtlx"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  "
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "HAVE_MYSQL_OPT_EMBEDDED_CONNECTION"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-xBEtlx'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_3b963/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_3b963.dir/build.make CMakeFiles/cmTC_3b963.dir/build
+        Building CXX object CMakeFiles/cmTC_3b963.dir/src.cxx.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DHAVE_MYSQL_OPT_EMBEDDED_CONNECTION  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -fPIE -MD -MT CMakeFiles/cmTC_3b963.dir/src.cxx.o -MF CMakeFiles/cmTC_3b963.dir/src.cxx.o.d -o CMakeFiles/cmTC_3b963.dir/src.cxx.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-xBEtlx/src.cxx
+        /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-xBEtlx/src.cxx:1:10: fatal error: 'mysql.h' file not found
+        #include <mysql.h>
+                 ^~~~~~~~~
+        1 error generated.
+        make[1]: *** [CMakeFiles/cmTC_3b963.dir/src.cxx.o] Error 1
+        make: *** [cmTC_3b963/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckSourceCompiles.cmake:77 (cmake_check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckStructHasMember.cmake:77 (CHECK_SOURCE_COMPILES)"
+      - "3rdpart/CMakeLists.txt:126 (check_struct_has_member)"
+    checks:
+      - "Performing Test HAVE_MMSG_HDR"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1IfSCB"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1IfSCB"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security "
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "HAVE_MMSG_HDR"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1IfSCB'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cccac/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_cccac.dir/build.make CMakeFiles/cmTC_cccac.dir/build
+        Building C object CMakeFiles/cmTC_cccac.dir/src.c.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DHAVE_MMSG_HDR -D_GNU_SOURCE  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security   -fPIE -MD -MT CMakeFiles/cmTC_cccac.dir/src.c.o -MF CMakeFiles/cmTC_cccac.dir/src.c.o.d -o CMakeFiles/cmTC_cccac.dir/src.c.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1IfSCB/src.c
+        Linking C executable cmTC_cccac
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cccac.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security   -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections   CMakeFiles/cmTC_cccac.dir/src.c.o -o cmTC_cccac  -latomic -lm 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "3rdpart/CMakeLists.txt:127 (check_symbol_exists)"
+    checks:
+      - "Looking for sendmmsg"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-aw3X1A"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-aw3X1A"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat "
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "HAVE_SENDMMSG_API"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-aw3X1A'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_53f51/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_53f51.dir/build.make CMakeFiles/cmTC_53f51.dir/build
+        Building C object CMakeFiles/cmTC_53f51.dir/CheckSymbolExists.c.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -D_GNU_SOURCE  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat   -fPIE -MD -MT CMakeFiles/cmTC_53f51.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_53f51.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_53f51.dir/CheckSymbolExists.c.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-aw3X1A/CheckSymbolExists.c
+        Linking C executable cmTC_53f51
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_53f51.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat   -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections   CMakeFiles/cmTC_53f51.dir/CheckSymbolExists.c.o -o cmTC_53f51  -latomic -lm 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckSymbolExists.cmake:66 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "3rdpart/CMakeLists.txt:128 (check_symbol_exists)"
+    checks:
+      - "Looking for recvmmsg"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1nYVb6"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1nYVb6"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_C_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat "
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "HAVE_RECVMMSG_API"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1nYVb6'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e020f/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_e020f.dir/build.make CMakeFiles/cmTC_e020f.dir/build
+        Building C object CMakeFiles/cmTC_e020f.dir/CheckSymbolExists.c.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -D_GNU_SOURCE  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat   -fPIE -MD -MT CMakeFiles/cmTC_e020f.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_e020f.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_e020f.dir/CheckSymbolExists.c.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-1nYVb6/CheckSymbolExists.c
+        Linking C executable cmTC_e020f
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e020f.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat   -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections   CMakeFiles/cmTC_e020f.dir/CheckSymbolExists.c.o -o cmTC_e020f  -latomic -lm 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckCompilerFlag.cmake:52 (cmake_check_compiler_flag)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:238 (check_compiler_flag)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:419 (_test_compiler_hidden_visibility)"
+      - "api/CMakeLists.txt:66 (generate_export_header)"
+    checks:
+      - "Performing Test COMPILER_HAS_HIDDEN_VISIBILITY"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-K62tOS"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-K62tOS"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  "
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "COMPILER_HAS_HIDDEN_VISIBILITY"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-K62tOS'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d5efc/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_d5efc.dir/build.make CMakeFiles/cmTC_d5efc.dir/build
+        Building CXX object CMakeFiles/cmTC_d5efc.dir/src.cxx.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DCOMPILER_HAS_HIDDEN_VISIBILITY  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -fPIE   -fvisibility=hidden -MD -MT CMakeFiles/cmTC_d5efc.dir/src.cxx.o -MF CMakeFiles/cmTC_d5efc.dir/src.cxx.o.d -o CMakeFiles/cmTC_d5efc.dir/src.cxx.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-K62tOS/src.cxx
+        Linking CXX executable cmTC_d5efc
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d5efc.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections   CMakeFiles/cmTC_d5efc.dir/src.cxx.o -o cmTC_d5efc  -latomic -lm 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckCompilerFlag.cmake:52 (cmake_check_compiler_flag)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:239 (check_compiler_flag)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:419 (_test_compiler_hidden_visibility)"
+      - "api/CMakeLists.txt:66 (generate_export_header)"
+    checks:
+      - "Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-jVSgq5"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-jVSgq5"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  "
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "COMPILER_HAS_HIDDEN_INLINE_VISIBILITY"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-jVSgq5'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_67bd6/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_67bd6.dir/build.make CMakeFiles/cmTC_67bd6.dir/build
+        Building CXX object CMakeFiles/cmTC_67bd6.dir/src.cxx.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DCOMPILER_HAS_HIDDEN_INLINE_VISIBILITY  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -fPIE   -fvisibility-inlines-hidden -MD -MT CMakeFiles/cmTC_67bd6.dir/src.cxx.o -MF CMakeFiles/cmTC_67bd6.dir/src.cxx.o.d -o CMakeFiles/cmTC_67bd6.dir/src.cxx.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-jVSgq5/src.cxx
+        Linking CXX executable cmTC_67bd6
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67bd6.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections   CMakeFiles/cmTC_67bd6.dir/src.cxx.o -o cmTC_67bd6  -latomic -lm 
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CheckSourceCompiles.cmake:77 (cmake_check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:206 (check_source_compiles)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:263 (_check_cxx_compiler_attribute)"
+      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/GenerateExportHeader.cmake:420 (_test_compiler_has_deprecated)"
+      - "api/CMakeLists.txt:66 (generate_export_header)"
+    checks:
+      - "Performing Test COMPILER_HAS_DEPRECATED_ATTR"
+    directories:
+      source: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-FHvKY6"
+      binary: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-FHvKY6"
+    cmakeVariables:
+      ANDROID_ABI: "arm64-v8a"
+      ANDROID_ARM_MODE: "thumb"
+      ANDROID_PIE: "TRUE"
+      ANDROID_PLATFORM: "android-21"
+      ANDROID_STL: "c++_static"
+      ANDROID_TOOLCHAIN: "clang"
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
+      CMAKE_CXX_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_CXX_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_CXX_FLAGS: "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  "
+      CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64"
+      CMAKE_C_COMPILER_TARGET: "aarch64-none-linux-android21"
+      CMAKE_MODULE_PATH: "/Users/olaola/Desktop/ola/opensource/ZLMediaKit/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "TRUE"
+      CMAKE_SYSROOT: "/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+    buildResult:
+      variable: "COMPILER_HAS_DEPRECATED_ATTR"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-FHvKY6'
+        
+        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_49b0f/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_49b0f.dir/build.make CMakeFiles/cmTC_49b0f.dir/build
+        Building CXX object CMakeFiles/cmTC_49b0f.dir/src.cxx.o
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DCOMPILER_HAS_DEPRECATED_ATTR  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -fPIE -MD -MT CMakeFiles/cmTC_49b0f.dir/src.cxx.o -MF CMakeFiles/cmTC_49b0f.dir/src.cxx.o.d -o CMakeFiles/cmTC_49b0f.dir/src.cxx.o -c /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-FHvKY6/src.cxx
+        /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-FHvKY6/src.cxx:2:25: warning: 'somefunc' is deprecated [-Wdeprecated-declarations]
+            int main() { return somefunc();}
+                                ^
+        /Users/olaola/Desktop/ola/opensource/ZLMediaKit/build_android/CMakeFiles/CMakeScratch/TryCompile-FHvKY6/src.cxx:1:16: note: 'somefunc' has been explicitly marked deprecated here
+        __attribute__((__deprecated__)) int somefunc() { return 0; }
+                       ^
+        1 warning generated.
+        Linking CXX executable cmTC_49b0f
+        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_49b0f.dir/link.txt --verbose=1
+        /Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/olaola/Desktop/ola/ndk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security    -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,--gc-sections   CMakeFiles/cmTC_49b0f.dir/src.cxx.o -o cmTC_49b0f  -latomic -lm 
+        
+      exitCode: 0
+...

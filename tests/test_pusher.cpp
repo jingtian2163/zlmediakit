@@ -126,7 +126,7 @@ int domain(const string &playUrl, const string &pushUrl) {
 
 
 int main(int argc, char *argv[]) {
-    return domain("rtmp://live.hkstv.hk.lxdns.com/live/hks1", "rtsp://127.0.0.1/live/rtsp_push");
+    return domain("rtsp://101.43.53.16:554/live/stream", "rtsp://127.0.0.1/live/rtsp_push");
 }
 
 

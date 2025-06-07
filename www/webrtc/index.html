@@ -42,7 +42,7 @@
         <div style="float: right; width: 70%">
             <p>
                 <label for="streamUrl">url:</label>
-                <input type="text" style="co; width:70%" id='streamUrl' value="http://192.168.1.101/index/api/webrtc?app=live&stream=xiong&type=play">
+                <input type="text" style="width:70%" id='streamUrl' value="http://192.168.1.101/index/api/webrtc?app=live&stream=xiong&type=play">
             </p>
 
             <p>
@@ -449,5 +449,30 @@
   <script>
     
   </script>
+
+  <div style="text-align: left; margin: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+    <h3>FFMPEG推流示例:</h3>
+    <pre>
+# 使用摄像头和麦克风推流
+ffmpeg -f avfoundation -framerate 30 -video_size 1280x720 -i "0:1" -c:v libx264 -preset ultrafast -tune zerolatency -g 60 -b:v 1000k -c:a aac -b:a 128k -ar 44100 -f rtsp rtsp://127.0.0.1:554/live/camera
+
+# 避免时间戳错误的另一种方法
+ffmpeg -f avfoundation -framerate 30 -video_size 1280x720 -i "0:1" -c:v libx264 -preset ultrafast -tune zerolatency -vsync vfr -g 60 -r 30 -f rtsp rtsp://127.0.0.1:554/live/camera
+
+# 解决Mac上的像素格式问题
+ffmpeg -f avfoundation -framerate 30 -video_size 1280x720 -pix_fmt uyvy422 -i "0:1" -c:v libx264 -preset ultrafast -tune zerolatency -g 60 -b:v 1000k -c:a aac -b:a 128k -ar 44100 -f rtsp rtsp://127.0.0.1:554/live/camera
+
+# 远程推流 (确保ZLMediaKit配置了listen_ip=0.0.0.0)
+ffmpeg -f avfoundation -framerate 30 -video_size 1280x720 -pix_fmt uyvy422 -i "0:1" -c:v libx264 -preset ultrafast -tune zerolatency -g 60 -b:v 1000k -c:a aac -b:a 128k -ar 44100 -f rtsp rtsp://本机IP:554/live/camera
+    </pre>
+    
+    <h3>常见问题:</h3>
+    <ol>
+      <li><strong>Broken pipe错误</strong>: 检查ZLMediaKit是否正在运行，配置文件中listen_ip是否设为0.0.0.0</li>
+      <li><strong>像素格式错误</strong>: 在Mac上使用-pix_fmt uyvy422参数</li>
+      <li><strong>无法通过IP访问</strong>: 检查config.ini中的allow_ip_range和listen_ip设置</li>
+      <li><strong>时间戳错误</strong>: 添加-vsync vfr参数</li>
+    </ol>
+  </div>
 
 </html>
