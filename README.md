@@ -40,3 +40,13 @@ scp -r root@8.210.187.185:/root/webrtc/rtc/src/out/Release/apks ./
 https://blog.csdn.net/rosyrays1/article/details/148355150 webrtc 最新版本android aar编译
 
 chrome://webrtc-internals 查看数据
+
+rtsp/rtmp direct_Proxy = 0;避免转发，直接推流,解决h265无法推流问题
+
+
+webrtc 编译时候出错,需要去除这个
+then
+   echo Running depot tools as root is sad.
+-  exit
++ # exit
+ fi
