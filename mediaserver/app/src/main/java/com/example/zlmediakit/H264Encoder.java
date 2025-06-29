@@ -93,9 +93,19 @@ public class H264Encoder {
         // 创建输出文件流
         mFileOutputStream = new BufferedOutputStream(new FileOutputStream(mOutputFile));
         
-        // 创建MediaFormat
-        MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
+        // 由于要旋转90度，编码器的宽高需要互换
+        int encoderWidth = mHeight;  // 旋转后宽度 = 原始高度
+        int encoderHeight = mWidth;  // 旋转后高度 = 原始宽度
+        
+        Log.d(TAG, "编码器尺寸 (旋转后): " + encoderWidth + "x" + encoderHeight);
+        
+        // 创建MediaFormat - 使用旋转后的尺寸
+        MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, encoderWidth, encoderHeight);
+        
+        // 设置颜色格式 - 使用NV21格式（相机默认格式）
         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
+        
+        // 设置基本编码参数
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
         format.setInteger(MediaFormat.KEY_FRAME_RATE, FRAMERATE);
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_INTERVAL);
@@ -104,6 +114,19 @@ public class H264Encoder {
         format.setInteger(MediaFormat.KEY_PROFILE, MediaCodecInfo.CodecProfileLevel.AVCProfileBaseline);
         format.setInteger(MediaFormat.KEY_LEVEL, MediaCodecInfo.CodecProfileLevel.AVCLevel31);
         
+        // 修复颜色空间设置 - 关键部分！
+        // 设置颜色标准为BT.709（高清标准），避免颜色偏差
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            format.setInteger(MediaFormat.KEY_COLOR_STANDARD, MediaFormat.COLOR_STANDARD_BT709);
+            format.setInteger(MediaFormat.KEY_COLOR_TRANSFER, MediaFormat.COLOR_TRANSFER_SDR_VIDEO);
+            format.setInteger(MediaFormat.KEY_COLOR_RANGE, MediaFormat.COLOR_RANGE_LIMITED);
+        }
+        
+        // 设置视频旋转角度为90度（竖屏拍摄）
+        format.setInteger(MediaFormat.KEY_ROTATION, 90);
+        
+        Log.d(TAG, "MediaFormat配置: " + format.toString());
+        
         // 创建编码器
         mEncoder = MediaCodec.createEncoderByType(MIME_TYPE);
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
@@ -111,13 +134,13 @@ public class H264Encoder {
         
         mIsRunning = true;
         
-        // 初始化推流器
+        // 初始化推流器 - 使用旋转后的尺寸
         if (mEnableStreaming) {
             mPusherPtr = nativeCreatePusher();
             if (mPusherPtr != 0) {
-                boolean initSuccess = nativeInitPusher(mPusherPtr, mRtspUrl, mWidth, mHeight, FRAMERATE);
+                boolean initSuccess = nativeInitPusher(mPusherPtr, mRtspUrl, encoderWidth, encoderHeight, FRAMERATE);
                 if (initSuccess) {
-                    Log.d(TAG, "RTSP推流器初始化成功: " + mRtspUrl);
+                    Log.d(TAG, "RTSP推流器初始化成功: " + mRtspUrl + " (尺寸: " + encoderWidth + "x" + encoderHeight + ")");
                     if (mStreamCallback != null) {
                         mStreamCallback.onStreamStarted();
                     }
@@ -195,15 +218,83 @@ public class H264Encoder {
                 ByteBuffer inputBuffer = mEncoder.getInputBuffer(inputBufferIndex);
                 if (inputBuffer != null) {
                     inputBuffer.clear();
-                    inputBuffer.put(frameData);
+                    
+                    // 第一步：转换NV21到NV12格式以修复颜色问题
+                    byte[] nv12Data = convertNV21ToNV12(frameData, mWidth, mHeight);
+                    
+                    // 第二步：旋转90度以修正视频方向
+                    byte[] rotatedData = rotateNV12_90(nv12Data, mWidth, mHeight);
+                    
+                    inputBuffer.put(rotatedData);
                     
                     long presentationTimeUs = System.nanoTime() / 1000;
-                    mEncoder.queueInputBuffer(inputBufferIndex, 0, frameData.length, presentationTimeUs, 0);
+                    mEncoder.queueInputBuffer(inputBufferIndex, 0, rotatedData.length, presentationTimeUs, 0);
                 }
             }
         } catch (Exception e) {
             Log.e(TAG, "Error encoding frame: " + e.getMessage());
         }
+    }
+    
+    /**
+     * 将NV21格式转换为NV12格式
+     * NV21: Y...Y + V U V U V U...
+     * NV12: Y...Y + U V U V U V...
+     */
+    private byte[] convertNV21ToNV12(byte[] nv21, int width, int height) {
+        int ySize = width * height;
+        int uvSize = ySize / 2;
+        byte[] nv12 = new byte[ySize + uvSize];
+        
+        // 复制Y分量（不需要改变）
+        System.arraycopy(nv21, 0, nv12, 0, ySize);
+        
+        // 转换UV分量：NV21是VUVUVU，需要转换为NV12的UVUVUV
+        for (int i = 0; i < uvSize; i += 2) {
+            nv12[ySize + i] = nv21[ySize + i + 1];     // U
+            nv12[ySize + i + 1] = nv21[ySize + i];     // V
+        }
+        
+        return nv12;
+    }
+    
+    /**
+     * 将NV12格式的YUV数据顺时针旋转90度
+     * 原始尺寸: width x height
+     * 旋转后尺寸: height x width
+     */
+    private byte[] rotateNV12_90(byte[] nv12, int width, int height) {
+        int ySize = width * height;
+        int uvSize = ySize / 2;
+        byte[] rotated = new byte[ySize + uvSize];
+        
+        // 旋转Y分量（亮度）
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int srcIndex = y * width + x;
+                int dstIndex = x * height + (height - 1 - y);
+                rotated[dstIndex] = nv12[srcIndex];
+            }
+        }
+        
+        // 旋转UV分量（色度）
+        int uvWidth = width / 2;
+        int uvHeight = height / 2;
+        
+        for (int y = 0; y < uvHeight; y++) {
+            for (int x = 0; x < uvWidth; x++) {
+                int srcIndexU = ySize + (y * uvWidth + x) * 2;
+                int srcIndexV = srcIndexU + 1;
+                
+                int dstIndexU = ySize + (x * uvHeight + (uvHeight - 1 - y)) * 2;
+                int dstIndexV = dstIndexU + 1;
+                
+                rotated[dstIndexU] = nv12[srcIndexU]; // U
+                rotated[dstIndexV] = nv12[srcIndexV]; // V
+            }
+        }
+        
+        return rotated;
     }
     
     private void drainEncoder(boolean endOfStream) {

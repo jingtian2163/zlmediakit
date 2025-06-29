@@ -54,7 +54,7 @@ public:
         LOGI("FFmpeg网络初始化完成");
 
         // 创建输出上下文
-        int ret = avformat_alloc_output_context2(&m_octx, NULL, "flv", rtmpUrl);
+        int ret = avformat_alloc_output_context2(&m_octx, NULL, "rtsp", rtmpUrl);
         if (ret < 0 || !m_octx) {
             char errbuf[AV_ERROR_MAX_STRING_SIZE];
             av_strerror(ret, errbuf, sizeof(errbuf));

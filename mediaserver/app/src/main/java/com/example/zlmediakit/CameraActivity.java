@@ -327,7 +327,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             File outputFile = createOutputFile();
             
             // RTSP推流地址
-            String rtspUrl = "rtmp://127.0.0.1:1935/live/vrcamera1";
+            //String rtspUrl = "rtmp://127.0.0.1:1935/live/vrcamera1";
+            String rtspUrl = "rtsp://127.0.0.1:8554/live/vrcamera1";
             
             // 创建流回调接口
             H264Encoder.StreamCallback streamCallback = new H264Encoder.StreamCallback() {
