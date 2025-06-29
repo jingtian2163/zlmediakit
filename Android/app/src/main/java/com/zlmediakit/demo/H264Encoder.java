@@ -352,7 +352,7 @@ public class H264Encoder {
                     if (mEnableStreaming && mPusherPtr != 0) {
                         boolean pushSuccess = nativePushFrame(mPusherPtr, outputData, outputData.length, isKeyFrame);
                         if (!pushSuccess) {
-                            Log.w(TAG, "RTSP推流失败");
+                           // Log.w(TAG, "RTSP推流失败");
                         }
                     }
                 } else {

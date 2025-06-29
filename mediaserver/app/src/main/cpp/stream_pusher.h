@@ -133,6 +133,23 @@ public:
             return false;
         }
 
+        // 打印前10帧的前80个字节的16进制数据
+        if (m_frameCount < 10) {
+            int printLength = (size > 80) ? 80 : size;
+            std::string hexStr = "";
+            for (int i = 0; i < printLength; i++) {
+                char buf[4];
+                sprintf(buf, "%02X ", data[i]);
+                hexStr += buf;
+                // 每16字节换行
+                // if ((i + 1) % 16 == 0) {
+                //     hexStr += "\n";
+                // }
+            }
+            LOGI("第%ld帧数据 (前%d字节): 大小=%d, 关键帧=%s\n%s", 
+                 (long)(m_frameCount + 1), printLength, size, isKeyFrame ? "是" : "否", hexStr.c_str());
+        }
+
         // 确保buffer足够大
         if (size > m_bufferSize) {
             uint8_t* newBuffer = (uint8_t*)av_realloc(m_reusableBuffer, size);
@@ -177,8 +194,8 @@ public:
         }
 
         // 写入帧
-        LOGI("准备写入第%ld帧 (关键帧:%s, 大小:%d字节, PTS:%ld)", 
-             (long)(m_frameCount + 1), isKeyFrame ? "是" : "否", size, (long)pts);
+        // LOGI("准备写入第%ld帧 (关键帧:%s, 大小:%d字节, PTS:%ld)", 
+        //      (long)(m_frameCount + 1), isKeyFrame ? "是" : "否", size, (long)pts);
         
         int ret = av_interleaved_write_frame(m_octx, packet);
         if (ret < 0) {
@@ -190,7 +207,7 @@ public:
             return false;
         }
         
-        LOGI("第%ld帧写入成功", (long)(m_frameCount + 1));
+        //LOGI("第%ld帧写入成功", (long)(m_frameCount + 1));
         m_frameCount++;
         m_frameCountSecond++;
 

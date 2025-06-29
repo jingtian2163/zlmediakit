@@ -174,8 +174,8 @@ public:
         }
 
         // 写入帧
-        LOGI("准备写入第%lld帧 (关键帧:%s, 大小:%d字节, PTS:%lld)", 
-             m_frameCount + 1, isKeyFrame ? "是" : "否", size, pts);
+        // LOGI("准备写入第%lld帧 (关键帧:%s, 大小:%d字节, PTS:%lld)", 
+        //      m_frameCount + 1, isKeyFrame ? "是" : "否", size, pts);
         
         int ret = av_interleaved_write_frame(m_octx, packet);
         if (ret < 0) {

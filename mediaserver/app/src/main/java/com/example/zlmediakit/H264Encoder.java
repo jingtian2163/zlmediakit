@@ -330,15 +330,15 @@ public class H264Encoder {
                 // 拷贝I帧数据
                 System.arraycopy(data, 0, outputData, offset, data.length);
                 
-                Log.d(TAG, String.format("Frame %d: %s frame (SPS+PPS+I), size=%d, keyFrame=%s",
-                        mFrameCount, frameType, outputData.length, isKeyFrame));
+                // Log.d(TAG, String.format("Frame %d: %s frame (SPS+PPS+I), size=%d, keyFrame=%s",
+                //         mFrameCount, frameType, outputData.length, isKeyFrame));
                 
             } else {
                 // P帧或其他帧直接使用原数据
                 outputData = data;
                 
-                Log.d(TAG, String.format("Frame %d: %s frame, size=%d, keyFrame=%s",
-                        mFrameCount, frameType, outputData.length, isKeyFrame));
+                // Log.d(TAG, String.format("Frame %d: %s frame, size=%d, keyFrame=%s",
+                //         mFrameCount, frameType, outputData.length, isKeyFrame));
             }
             
             // 再次检查最终输出数据的大小
@@ -383,7 +383,7 @@ public class H264Encoder {
                 if (!pushSuccess) {
                     Log.w(TAG, "RTSP推流失败 - 帧大小: " + outputData.length);
                 } else if (mFrameCount <= 10) {
-                    Log.d(TAG, "RTSP推流成功 - 帧大小: " + outputData.length + ", 类型: " + frameType);
+                    //Log.d(TAG, "RTSP推流成功 - 帧大小: " + outputData.length + ", 类型: " + frameType);
                 }
             } else if (mEnableStreaming && outputData.length <= 15) {
                 Log.w(TAG, "跳过推流 - 数据包太小: " + outputData.length + " bytes");

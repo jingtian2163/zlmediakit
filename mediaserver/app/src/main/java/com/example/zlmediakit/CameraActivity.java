@@ -46,6 +46,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     private int mPreviewHeight = 720;
     private int mFrameRate = 30;
 
+    // 添加帧计数器
+    private long mFrameCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +258,16 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             
             mCamera.setParameters(parameters);
             
+            Log.d(TAG, "摄像头参数设置完成");
+            
+            // 如果Surface已经准备好，立即开始预览
+            if (mSurfaceHolder != null && mSurfaceHolder.getSurface().isValid()) {
+                Log.d(TAG, "Surface已准备好，开始预览");
+                startPreview();
+            } else {
+                Log.d(TAG, "Surface尚未准备好，等待surfaceChanged回调");
+            }
+            
         } catch (Exception e) {
             Log.e(TAG, "设置摄像头参数失败", e);
         }
@@ -414,7 +427,13 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.d(TAG, "surfaceChanged: " + width + "x" + height);
-        startPreview();
+        
+        // 只有相机已经初始化才启动预览
+        if (mCamera != null) {
+            startPreview();
+        } else {
+            Log.d(TAG, "surfaceChanged: 相机尚未初始化，等待相机初始化完成");
+        }
     }
     
     @Override
@@ -424,18 +443,42 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     }
     
     private void startPreview() {
-        if (mCamera == null || mIsPreviewRunning) return;
+        Log.d(TAG, "startPreview: 开始尝试启动预览");
+        
+        if (mCamera == null) {
+            Log.e(TAG, "startPreview: 相机为空，无法启动预览");
+            return;
+        }
+        
+        if (mIsPreviewRunning) {
+            Log.d(TAG, "startPreview: 预览已经在运行中");
+            return;
+        }
+        
+        if (mSurfaceHolder == null) {
+            Log.e(TAG, "startPreview: SurfaceHolder为空，无法启动预览");
+            return;
+        }
         
         try {
+            Log.d(TAG, "startPreview: 设置预览显示");
             mCamera.setPreviewDisplay(mSurfaceHolder);
+            
+            Log.d(TAG, "startPreview: 设置预览回调");
             mCamera.setPreviewCallback(this);
+            
+            Log.d(TAG, "startPreview: 开始预览");
             mCamera.startPreview();
             mIsPreviewRunning = true;
             
-            Log.d(TAG, "预览开始");
+            Log.d(TAG, "预览启动成功！");
             
+        } catch (IOException e) {
+            Log.e(TAG, "设置预览显示失败", e);
+        } catch (RuntimeException e) {
+            Log.e(TAG, "启动预览运行时异常", e);
         } catch (Exception e) {
-            Log.e(TAG, "开始预览失败", e);
+            Log.e(TAG, "启动预览失败", e);
         }
     }
     
@@ -451,20 +494,30 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
+        mFrameCount++;
+        
+        // 每30帧打印一次状态（大约1秒）
+        if (mFrameCount % 100 == 1) {
+            Log.d(TAG, String.format("onPreviewFrame: 接收到第%d帧，数据大小=%d字节, 录制状态=%s", 
+                    mFrameCount, data != null ? data.length : 0, mIsRecording ? "录制中" : "未录制"));
+        }
+        
         if (mIsRecording && mH264Encoder != null) {
             if (data != null && data.length > 0) {
-                // 检查前几个字节
-                // StringBuilder hexStart = new StringBuilder();
-                // for (int i = 0; i < Math.min(20, data.length); i++) {
-                //     hexStart.append(String.format("%02X ", data[i] & 0xFF));
-                // }
-                // Log.d(TAG, String.format("Camera frame: size=%d, first 20 bytes: %s", 
-                //         data.length, hexStart.toString()));
+                // 前10帧打印前20个字节用于调试
+                if (mFrameCount <= 10) {
+                    StringBuilder hexStart = new StringBuilder();
+                    for (int i = 0; i < Math.min(20, data.length); i++) {
+                        hexStart.append(String.format("%02X ", data[i] & 0xFF));
+                    }
+                    Log.d(TAG, String.format("Camera frame %d: size=%d, first 20 bytes: %s", 
+                            mFrameCount, data.length, hexStart.toString()));
+                }
                 
                 // 将YUV数据传递给编码器
                 mH264Encoder.onFrameAvailable(data);
             } else {
-                Log.w(TAG, "Camera frame is null or empty");
+                Log.w(TAG, "Camera frame " + mFrameCount + " is null or empty");
             }
         }
     }
