@@ -1,0 +1,14 @@
+prefix=/Users/olaola/Downloads/ffmpeg-4.4.5/build/arm64-v8a
+exec_prefix=${prefix}
+libdir=/Users/olaola/Downloads/ffmpeg-4.4.5/build/arm64-v8a/lib
+includedir=/Users/olaola/Downloads/ffmpeg-4.4.5/build/arm64-v8a/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 5.9.100
+Requires: 
+Requires.private: libavutil >= 56.70.100
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: -lm -latomic
+Cflags: -I${includedir}

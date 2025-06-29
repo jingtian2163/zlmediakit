@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <SurfaceView
+        android:id="@+id/surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_start_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="开始录制"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF4444" />
+
+        <Button
+            android:id="@+id/btn_switch_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换摄像头"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4444FF" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="相机预览"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:background="#80000000"
+        android:padding="8dp" />
+
+</RelativeLayout> 
