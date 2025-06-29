@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.INTERNET"};
 
+    private ZLMediaKit.MediaPlayer _player;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"请给予我权限，否则无法启动测试！" ,Toast.LENGTH_LONG).show();
         }
         ZLMediaKit.startDemo(sd_dir);
+        test_player();
     }
 
-    private ZLMediaKit.MediaPlayer _player;
+
     private void test_player(){
-        _player = new ZLMediaKit.MediaPlayer("rtmp://live.hkstv.hk.lxdns.com/live/hks1", new ZLMediaKit.MediaPlayerCallBack() {
+       //_player = new ZLMediaKit.MediaPlayer("rtsp://192.168.31.127/live/camera", new ZLMediaKit.MediaPlayerCallBack() {
+        _player = new ZLMediaKit.MediaPlayer("http://192.168.31.127:8888/index/api/webrtc?app=live&stream=camera&type=play", new ZLMediaKit.MediaPlayerCallBack() {
             @Override
             public void onPlayResult(int code, String msg) {
                 Log.d(TAG,"onPlayResult:" + code + "," + msg);

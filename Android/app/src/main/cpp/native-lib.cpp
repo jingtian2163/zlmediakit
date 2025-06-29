@@ -15,7 +15,6 @@
 #include "Common/config.h"
 #include "Player/MediaPlayer.h"
 #include "Extension/Frame.h"
-#include "rtmpPush.h"
 
 using namespace std;
 using namespace toolkit;
