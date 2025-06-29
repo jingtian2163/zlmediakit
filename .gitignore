@@ -43,9 +43,39 @@
 /Android/.idea/
 /Android/app/src/main/cpp/libs_export/
 /3rdpart/media-server/.idea/
+**/libs_export/
 /3rdpart/media-server/.idea/
 /build/
 /3rdpart/media-server/.idea/
 /ios/
 /cmake-build-*
 /3rdpart/ZLToolKit/cmake-build-mq/
+
+# Android编译文件
+/Android/app/build/
+/Android/app/.cxx/
+/Android/.gradle/
+/Android/local.properties
+
+# mediaserver编译文件  
+/mediaserver/app/build/
+/mediaserver/app/.cxx/
+/mediaserver/.gradle/
+/mediaserver/local.properties
+/mediaserver/.idea/
+
+# 其他编译目录
+/build_mac/
+/build_android/
+/cmake-build-debug/
+/cmake-build-release/
+
+# APK文件
+*.apk
+*.aab
+
+# NDK编译文件
+*.so.debug
+obj/
+libs/
+**/jniLibs/
