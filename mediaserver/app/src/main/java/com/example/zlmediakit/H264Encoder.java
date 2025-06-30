@@ -11,14 +11,12 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class H264Encoder {
     private static final String TAG = "H264Encoder";
     private static final String MIME_TYPE = "video/avc";
     private static final int IFRAME_INTERVAL = 2; // 2秒GOP
-    private static final int BITRATE = 2000000; // 2Mbps
+    private static final int BITRATE = 10000000; // 10Mbps
     private static final int FRAMERATE = 30;
     
     // 加载native库
@@ -56,7 +54,6 @@ public class H264Encoder {
     
     private boolean mIsRunning = false;
     private Thread mEncoderThread;
-    private BlockingQueue<byte[]> mFrameQueue;
     
     // SPS和PPS
     private byte[] mSps;
@@ -72,7 +69,6 @@ public class H264Encoder {
         mHeight = height;
         mOutputFile = outputFile;
         mBufferInfo = new MediaCodec.BufferInfo();
-        mFrameQueue = new LinkedBlockingQueue<>();
     }
     
     // 启用RTSP推流的构造函数
@@ -83,27 +79,20 @@ public class H264Encoder {
         mRtspUrl = rtspUrl;
         mStreamCallback = callback;
         mBufferInfo = new MediaCodec.BufferInfo();
-        mFrameQueue = new LinkedBlockingQueue<>();
         mEnableStreaming = (rtspUrl != null && !rtspUrl.isEmpty());
     }
     
-    public void start() throws IOException {
+    public Surface start() throws IOException {
         Log.d(TAG, "Starting H264 encoder: " + mWidth + "x" + mHeight);
         
         // 创建输出文件流
         mFileOutputStream = new BufferedOutputStream(new FileOutputStream(mOutputFile));
         
-        // 由于要旋转90度，编码器的宽高需要互换
-        int encoderWidth = mHeight;  // 旋转后宽度 = 原始高度
-        int encoderHeight = mWidth;  // 旋转后高度 = 原始宽度
+        // 创建MediaFormat
+        MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
         
-        Log.d(TAG, "编码器尺寸 (旋转后): " + encoderWidth + "x" + encoderHeight);
-        
-        // 创建MediaFormat - 使用旋转后的尺寸
-        MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, encoderWidth, encoderHeight);
-        
-        // 设置颜色格式 - 使用NV21格式（相机默认格式）
-        format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
+        // 设置颜色格式 - Surface编码使用COLOR_FormatSurface
+        format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         
         // 设置基本编码参数
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
@@ -114,33 +103,32 @@ public class H264Encoder {
         format.setInteger(MediaFormat.KEY_PROFILE, MediaCodecInfo.CodecProfileLevel.AVCProfileBaseline);
         format.setInteger(MediaFormat.KEY_LEVEL, MediaCodecInfo.CodecProfileLevel.AVCLevel31);
         
-        // 修复颜色空间设置 - 关键部分！
-        // 设置颜色标准为BT.709（高清标准），避免颜色偏差
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        // 设置颜色空间和传输特性
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             format.setInteger(MediaFormat.KEY_COLOR_STANDARD, MediaFormat.COLOR_STANDARD_BT709);
             format.setInteger(MediaFormat.KEY_COLOR_TRANSFER, MediaFormat.COLOR_TRANSFER_SDR_VIDEO);
             format.setInteger(MediaFormat.KEY_COLOR_RANGE, MediaFormat.COLOR_RANGE_LIMITED);
         }
-        
-        // 设置视频旋转角度为90度（竖屏拍摄）
-        format.setInteger(MediaFormat.KEY_ROTATION, 90);
         
         Log.d(TAG, "MediaFormat配置: " + format.toString());
         
         // 创建编码器
         mEncoder = MediaCodec.createEncoderByType(MIME_TYPE);
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
-        mEncoder.start();
         
+        // 获取输入Surface - 这是关键！
+        mInputSurface = mEncoder.createInputSurface();
+        
+        mEncoder.start();
         mIsRunning = true;
         
-        // 初始化推流器 - 使用旋转后的尺寸
+        // 初始化推流器
         if (mEnableStreaming) {
             mPusherPtr = nativeCreatePusher();
             if (mPusherPtr != 0) {
-                boolean initSuccess = nativeInitPusher(mPusherPtr, mRtspUrl, encoderWidth, encoderHeight, FRAMERATE);
+                boolean initSuccess = nativeInitPusher(mPusherPtr, mRtspUrl, mWidth, mHeight, FRAMERATE);
                 if (initSuccess) {
-                    Log.d(TAG, "RTSP推流器初始化成功: " + mRtspUrl + " (尺寸: " + encoderWidth + "x" + encoderHeight + ")");
+                    Log.d(TAG, "RTSP推流器初始化成功: " + mRtspUrl + " (尺寸: " + mWidth + "x" + mHeight + ")");
                     if (mStreamCallback != null) {
                         mStreamCallback.onStreamStarted();
                     }
@@ -162,43 +150,20 @@ public class H264Encoder {
         });
         mEncoderThread.start();
         
-        Log.d(TAG, "H264 encoder started successfully");
-    }
-    
-    public void onFrameAvailable(byte[] data) {
-        if (mIsRunning && data != null && data.length > 0) {
-            try {
-                // 检查数据是否有效（不全是0）
-                boolean hasNonZeroData = false;
-                for (int i = 0; i < Math.min(100, data.length); i++) {
-                    if (data[i] != 0) {
-                        hasNonZeroData = true;
-                        break;
-                    }
-                }
-                
-                if (hasNonZeroData) {
-                    mFrameQueue.offer(data.clone());
-                } else {
-                    Log.w(TAG, "Skipping frame with all zero data, length: " + data.length);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "Error adding frame to queue: " + e.getMessage());
-            }
-        }
+        Log.d(TAG, "H264 encoder started successfully, returning Surface");
+        
+        // 返回输入Surface供相机使用
+        return mInputSurface;
     }
     
     private void encodeLoop() {
         while (mIsRunning) {
             try {
-                // 从队列获取帧数据 - 使用take()阻塞等待，避免空轮询
-                byte[] frameData = mFrameQueue.poll(10, java.util.concurrent.TimeUnit.MILLISECONDS);
-                if (frameData != null && frameData.length > 0) {
-                    encodeFrame(frameData);
-                }
-                
                 // 处理编码器输出
                 drainEncoder(false);
+                
+                // 短暂休眠避免过度占用CPU
+                Thread.sleep(10);
                 
             } catch (InterruptedException e) {
                 break;
@@ -211,102 +176,14 @@ public class H264Encoder {
         drainEncoder(true);
     }
     
-    private void encodeFrame(byte[] frameData) {
-        try {
-            int inputBufferIndex = mEncoder.dequeueInputBuffer(0);
-            if (inputBufferIndex >= 0) {
-                ByteBuffer inputBuffer = mEncoder.getInputBuffer(inputBufferIndex);
-                if (inputBuffer != null) {
-                    inputBuffer.clear();
-                    
-                    // 第一步：转换NV21到NV12格式以修复颜色问题
-                    byte[] nv12Data = convertNV21ToNV12(frameData, mWidth, mHeight);
-                    
-                    // 第二步：旋转90度以修正视频方向
-                    byte[] rotatedData = rotateNV12_90(nv12Data, mWidth, mHeight);
-                    
-                    inputBuffer.put(rotatedData);
-                    
-                    long presentationTimeUs = System.nanoTime() / 1000;
-                    mEncoder.queueInputBuffer(inputBufferIndex, 0, rotatedData.length, presentationTimeUs, 0);
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error encoding frame: " + e.getMessage());
-        }
-    }
-    
-    /**
-     * 将NV21格式转换为NV12格式
-     * NV21: Y...Y + V U V U V U...
-     * NV12: Y...Y + U V U V U V...
-     */
-    private byte[] convertNV21ToNV12(byte[] nv21, int width, int height) {
-        int ySize = width * height;
-        int uvSize = ySize / 2;
-        byte[] nv12 = new byte[ySize + uvSize];
-        
-        // 复制Y分量（不需要改变）
-        System.arraycopy(nv21, 0, nv12, 0, ySize);
-        
-        // 转换UV分量：NV21是VUVUVU，需要转换为NV12的UVUVUV
-        for (int i = 0; i < uvSize; i += 2) {
-            nv12[ySize + i] = nv21[ySize + i + 1];     // U
-            nv12[ySize + i + 1] = nv21[ySize + i];     // V
-        }
-        
-        return nv12;
-    }
-    
-    /**
-     * 将NV12格式的YUV数据顺时针旋转90度
-     * 原始尺寸: width x height
-     * 旋转后尺寸: height x width
-     */
-    private byte[] rotateNV12_90(byte[] nv12, int width, int height) {
-        int ySize = width * height;
-        int uvSize = ySize / 2;
-        byte[] rotated = new byte[ySize + uvSize];
-        
-        // 旋转Y分量（亮度）
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int srcIndex = y * width + x;
-                int dstIndex = x * height + (height - 1 - y);
-                rotated[dstIndex] = nv12[srcIndex];
-            }
-        }
-        
-        // 旋转UV分量（色度）
-        int uvWidth = width / 2;
-        int uvHeight = height / 2;
-        
-        for (int y = 0; y < uvHeight; y++) {
-            for (int x = 0; x < uvWidth; x++) {
-                int srcIndexU = ySize + (y * uvWidth + x) * 2;
-                int srcIndexV = srcIndexU + 1;
-                
-                int dstIndexU = ySize + (x * uvHeight + (uvHeight - 1 - y)) * 2;
-                int dstIndexV = dstIndexU + 1;
-                
-                rotated[dstIndexU] = nv12[srcIndexU]; // U
-                rotated[dstIndexV] = nv12[srcIndexV]; // V
-            }
-        }
-        
-        return rotated;
-    }
-    
     private void drainEncoder(boolean endOfStream) {
         if (endOfStream) {
-            int inputBufferIndex = mEncoder.dequeueInputBuffer(0);
-            if (inputBufferIndex >= 0) {
-                mEncoder.queueInputBuffer(inputBufferIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
-            }
+            Log.d(TAG, "Sending EOS to encoder");
+            mEncoder.signalEndOfInputStream();
         }
         
         while (true) {
-            int outputBufferIndex = mEncoder.dequeueOutputBuffer(mBufferInfo, 0);
+            int outputBufferIndex = mEncoder.dequeueOutputBuffer(mBufferInfo, 10000);
             
             if (outputBufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {
                 if (!endOfStream) {
@@ -339,13 +216,8 @@ public class H264Encoder {
                     outputBuffer.position(mBufferInfo.offset);
                     outputBuffer.get(data, 0, mBufferInfo.size);
                     
-                    // 检查编码数据是否有效
-                    if (data.length > 4) {
-                        // 处理编码数据
-                        processEncodedData(data);
-                    } else {
-                        Log.w(TAG, "Skipping invalid encoded data, size: " + data.length);
-                    }
+                    // 处理编码数据
+                    processEncodedData(data);
                 } else {
                     Log.w(TAG, "Encoder output buffer size is 0");
                 }
@@ -353,6 +225,7 @@ public class H264Encoder {
                 mEncoder.releaseOutputBuffer(outputBufferIndex, false);
                 
                 if ((mBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
+                    Log.d(TAG, "End of stream reached");
                     break;
                 }
             }
@@ -421,15 +294,17 @@ public class H264Encoder {
                 // 拷贝I帧数据
                 System.arraycopy(data, 0, outputData, offset, data.length);
                 
-                // Log.d(TAG, String.format("Frame %d: %s frame (SPS+PPS+I), size=%d, keyFrame=%s",
-                //         mFrameCount, frameType, outputData.length, isKeyFrame));
+                Log.d(TAG, String.format("Frame %d: %s frame (SPS+PPS+I), size=%d, keyFrame=%s",
+                        mFrameCount, frameType, outputData.length, isKeyFrame));
                 
             } else {
                 // P帧或其他帧直接使用原数据
                 outputData = data;
                 
-                // Log.d(TAG, String.format("Frame %d: %s frame, size=%d, keyFrame=%s",
-                //         mFrameCount, frameType, outputData.length, isKeyFrame));
+                if (mFrameCount <= 10) {
+                    Log.d(TAG, String.format("Frame %d: %s frame, size=%d, keyFrame=%s",
+                            mFrameCount, frameType, outputData.length, isKeyFrame));
+                }
             }
             
             // 再次检查最终输出数据的大小
@@ -448,36 +323,20 @@ public class H264Encoder {
                 Log.d(TAG, String.format("Frame %d hex data: %s", mFrameCount, hexString.toString()));
             }
             
-            // 验证数据内容
-            boolean hasValidData = false;
-            for (int i = 0; i < Math.min(10, outputData.length); i++) {
-                if (outputData[i] != 0) {
-                    hasValidData = true;
-                    break;
-                }
-            }
-            
-            if (!hasValidData) {
-                Log.w(TAG, "Skipping frame with all zero data, size: " + outputData.length);
-                return;
-            }
-            
             // 写入文件
             if (mFileOutputStream != null) {
                 mFileOutputStream.write(outputData);
                 mFileOutputStream.flush();
             }
             
-            // 推送到RTSP流 - 确保数据包足够大
+            // 推送到RTSP流
             if (mEnableStreaming && mPusherPtr != 0 && outputData.length > 15) {
                 boolean pushSuccess = nativePushFrame(mPusherPtr, outputData, outputData.length, isKeyFrame);
-                if (!pushSuccess) {
+                if (!pushSuccess && mFrameCount <= 10) {
                     Log.w(TAG, "RTSP推流失败 - 帧大小: " + outputData.length);
                 } else if (mFrameCount <= 10) {
-                    //Log.d(TAG, "RTSP推流成功 - 帧大小: " + outputData.length + ", 类型: " + frameType);
+                    Log.d(TAG, "RTSP推流成功 - 帧大小: " + outputData.length + ", 类型: " + frameType);
                 }
-            } else if (mEnableStreaming && outputData.length <= 15) {
-                Log.w(TAG, "跳过推流 - 数据包太小: " + outputData.length + " bytes");
             }
             
         } catch (IOException e) {
@@ -494,7 +353,7 @@ public class H264Encoder {
         
         if (mEncoderThread != null) {
             try {
-                mEncoderThread.join(1000);
+                mEncoderThread.join(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -508,6 +367,11 @@ public class H264Encoder {
             } catch (Exception e) {
                 Log.e(TAG, "Error stopping encoder: " + e.getMessage());
             }
+        }
+        
+        if (mInputSurface != null) {
+            mInputSurface.release();
+            mInputSurface = null;
         }
         
         if (mFileOutputStream != null) {
@@ -530,5 +394,12 @@ public class H264Encoder {
         
         Log.d(TAG, String.format("H264 encoder stopped. Total frames: %d, Output file: %s", 
                 mFrameCount, mOutputFile));
+    }
+    
+    /**
+     * 获取编码器的输入Surface
+     */
+    public Surface getInputSurface() {
+        return mInputSurface;
     }
 } 
