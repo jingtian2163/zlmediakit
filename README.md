@@ -50,3 +50,10 @@ then
 -  exit
 + # exit
  fi
+
+ rtsp://192.168.1.35:8554/live/vrcamera1  拉流mediaserver
+
+cd /Users/olaola/Desktop/ola/opensource/ZLMediaKit_副本/nacktest 
+cd /Users/olaola/Desktop/ola/opensource/ZLMediaKit_副本/build
+cmake ..
+make -j8

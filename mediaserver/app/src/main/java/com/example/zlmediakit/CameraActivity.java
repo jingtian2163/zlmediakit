@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import android.view.WindowManager;
+
 
 public class CameraActivity extends Activity implements SurfaceHolder.Callback, TextureView.SurfaceTextureListener {
     private static final String TAG = "CameraActivity";
@@ -57,6 +59,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         
+        // 设置屏幕常亮
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Log.d(TAG, "屏幕常亮已启用");
+
+
         Log.d(TAG, "CameraActivity onCreate");
         initViews();
         

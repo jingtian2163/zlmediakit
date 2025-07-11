@@ -16,7 +16,7 @@ public class H264Encoder {
     private static final String TAG = "H264Encoder";
     private static final String MIME_TYPE = "video/avc";
     private static final int IFRAME_INTERVAL = 2; // 2秒GOP
-    private static final int BITRATE = 10000000; // 10Mbps
+    private static final int BITRATE = 2000000; // 10Mbps
     private static final int FRAMERATE = 30;
     
     // 加载native库

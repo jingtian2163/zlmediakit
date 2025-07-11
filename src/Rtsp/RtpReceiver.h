@@ -208,13 +208,13 @@ private:
     bool _started = false;
     // 排序缓存最大保存数据长度，单位毫秒  [AUTO-TRANSLATED:ed217b1c]
     // Maximum data length of sorting cache, unit: milliseconds
-    size_t _max_buffer_ms = 1000;
+    size_t _max_buffer_ms = 3000;
     // 排序缓存最大保存数据个数  [AUTO-TRANSLATED:9cfa91b4]
     // Maximum number of data in sorting cache
-    size_t _max_buffer_size = 1024;
+    size_t _max_buffer_size = 2048;
     // seq最大跳跃距离  [AUTO-TRANSLATED:bb663e41]
     // Maximum seq jump distance
-    size_t _max_distance = 256;
+    size_t _max_distance = 512;
     // 记录上次output至今的时间  [AUTO-TRANSLATED:83e53e42]
     // Record the time since the last output
     toolkit::Ticker _ticker;
