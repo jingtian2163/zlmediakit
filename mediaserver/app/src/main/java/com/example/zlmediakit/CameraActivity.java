@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.WindowManager;
+import android.view.MotionEvent;
+import android.hardware.Camera.Area;
 
 
 public class CameraActivity extends Activity implements SurfaceHolder.Callback, TextureView.SurfaceTextureListener {
@@ -37,7 +39,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     private TextureView mTextureView;
     private Camera mCamera;
     private boolean mIsPreviewRunning = false;
-    private boolean mIsFrontCamera = true;
+    private boolean mIsFrontCamera = false;
     
     private H264Encoder mH264Encoder;
     private Button mBtnSwitch;
@@ -53,6 +55,14 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     private SurfaceTexture mSurfaceTexture;
     private Surface mCameraSurface;
     private Surface mEncoderSurface;
+
+    private boolean mIsAutoFocusSupported = false;
+    private Camera.AutoFocusCallback mAutoFocusCallback;
+    private Handler mAutoFocusHandler;
+    private Runnable mAutoFocusRunnable;
+    private int mMaxNumFocusAreas;
+    private int mMaxNumMeteringAreas;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +90,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             @Override
             public void run() {
                 if (!mIsRecording) {
-                    startRecording();
+                    //startRecording();
                 }
             }
         }, 3000); // 延迟3秒启动
@@ -92,6 +102,18 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         mBtnStart = findViewById(R.id.btn_start_record);
         
         mTextureView.setSurfaceTextureListener(this);
+         // 添加触摸监听以实现点击对焦
+        mTextureView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN && mCamera != null && mIsAutoFocusSupported) {
+                    handleTouchFocus(event);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         
         mBtnSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +133,162 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             }
         });
     }
+
+    private void handleTouchFocus(MotionEvent event) {
+        if (mCamera == null || !mIsAutoFocusSupported) return;
+        
+        try {
+            // 停止自动对焦
+            stopAutoFocus();
+            
+            // 获取触摸点坐标并转换为对焦区域
+            float x = event.getX();
+            float y = event.getY();
+            
+            Log.d(TAG, "原始点击坐标: (" + x + ", " + y + ")");
+            Log.d(TAG, "TextureView尺寸: " + mTextureView.getWidth() + "x" + mTextureView.getHeight());
+            
+            Rect focusRect = calculateTapArea(x, y, 1f);
+            Rect meteringRect = calculateTapArea(x, y, 1.5f);
+            
+            Log.d(TAG, "计算后的对焦区域: " + focusRect.toString());
+            Log.d(TAG, "计算后的测光区域: " + meteringRect.toString());
+            
+            Camera.Parameters parameters = mCamera.getParameters();
+            
+            // 设置对焦区域
+            if (parameters.getMaxNumFocusAreas() > 0) {
+                List<Camera.Area> focusAreas = new ArrayList<>();
+                focusAreas.add(new Camera.Area(focusRect, 1000));
+                parameters.setFocusAreas(focusAreas);
+                Log.d(TAG, "设置对焦区域: " + focusAreas.toString());
+            }
+            
+            // 设置测光区域
+            if (parameters.getMaxNumMeteringAreas() > 0) {
+                List<Camera.Area> meteringAreas = new ArrayList<>();
+                meteringAreas.add(new Camera.Area(meteringRect, 1000));
+                parameters.setMeteringAreas(meteringAreas);
+                Log.d(TAG, "设置测光区域: " + meteringAreas.toString());
+            }
+            
+            // 设置对焦模式为自动
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            mCamera.setParameters(parameters);
+            
+            // 启动对焦
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean success, Camera camera) {
+                    Log.d(TAG, "触摸对焦完成: " + (success ? "成功" : "失败"));
+                    // 对焦完成后恢复自动对焦
+                    if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                    } else if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                    }
+                    parameters.setFocusAreas(null);
+                    parameters.setMeteringAreas(null);
+                    camera.setParameters(parameters);
+                    
+                    // 重新启动自动对焦
+                    startAutoFocus();
+                }
+            });
+            
+        } catch (Exception e) {
+            Log.e(TAG, "触摸对焦失败", e);
+            // 失败后也尝试恢复自动对焦
+            startAutoFocus();
+        }
+    }
+
     
+    private Rect calculateTapArea(float x, float y, float coefficient) {
+        int areaSize = Float.valueOf(200 * coefficient).intValue();
+        
+        // 修正后的坐标转换逻辑
+        // 将屏幕坐标映射到相机坐标系统[-1000,1000]
+        // 注意屏幕和相机的坐标系可能不一致
+        
+        // 首先，将触摸点坐标从屏幕坐标系转换为比例值(0-1)
+        float normalizedX = x / mTextureView.getWidth();
+        float normalizedY = y / mTextureView.getHeight();
+        
+        Log.d(TAG, "归一化坐标: (" + normalizedX + ", " + normalizedY + ")");
+        
+        // 然后，将比例值映射到[-1000,1000]坐标系
+        int centerX = (int) ((normalizedX * 2000) - 1000);
+        int centerY = (int) ((normalizedY * 2000) - 1000);
+        
+        Log.d(TAG, "比例映射坐标: (" + centerX + ", " + centerY + ")");
+        
+        // 处理相机旋转(手机是竖屏，但相机是横向的)
+        // 对于后置摄像头(正常情况下为90度旋转)
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        Camera.getCameraInfo(mIsFrontCamera ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK, info);
+        
+        int adjustedX = centerX;
+        int adjustedY = centerY;
+        
+        // 根据设备方向和相机方向调整触摸点
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+        
+        // 计算需要补偿的角度
+        int totalRotation = 0;
+        if (mIsFrontCamera) {
+            totalRotation = (info.orientation + degrees) % 360;
+            totalRotation = (360 - totalRotation) % 360;  // 前置摄像头需要镜像
+        } else {
+            totalRotation = (info.orientation - degrees + 360) % 360;
+        }
+        
+        Log.d(TAG, "设备旋转: " + degrees + "度, 相机方向: " + info.orientation + 
+                "度, 总旋转: " + totalRotation + "度");
+        
+        // 根据总旋转角度调整坐标
+        if (totalRotation == 90) {
+            adjustedX = centerY;
+            adjustedY = -centerX;
+        } else if (totalRotation == 180) {
+            adjustedX = -centerX;
+            adjustedY = -centerY;
+        } else if (totalRotation == 270) {
+            adjustedX = -centerY;
+            adjustedY = centerX;
+        }
+        
+        Log.d(TAG, "旋转调整后的坐标: (" + adjustedX + ", " + adjustedY + ")");
+        
+        // 确保坐标在有效范围内
+        adjustedX = Math.max(-1000, Math.min(adjustedX, 1000));
+        adjustedY = Math.max(-1000, Math.min(adjustedY, 1000));
+        
+        // 计算区域边界
+        int left = adjustedX - areaSize / 2;
+        int right = adjustedX + areaSize / 2;
+        int top = adjustedY - areaSize / 2;
+        int bottom = adjustedY + areaSize / 2;
+        
+        // 确保区域不超出边界
+        left = Math.max(-1000, left);
+        top = Math.max(-1000, top);
+        right = Math.min(1000, right);
+        bottom = Math.min(1000, bottom);
+        
+        Rect result = new Rect(left, top, right, bottom);
+        Log.d(TAG, "最终对焦区域: " + result.toString());
+        return result;
+    }
+
+
     private void checkPermissions() {
         // 根据Android版本动态申请权限
         List<String> permissionList = new ArrayList<>();
@@ -263,13 +440,34 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                 Log.d(TAG, "设置帧率范围: " + bestFpsRange[0] + "-" + bestFpsRange[1]);
             }
             
+   
+
+             // 检查设备是否支持区域对焦
+            mMaxNumFocusAreas = parameters.getMaxNumFocusAreas();
+            mMaxNumMeteringAreas = parameters.getMaxNumMeteringAreas();
+            Log.d(TAG, "最大对焦区域数: " + mMaxNumFocusAreas + ", 最大测光区域数: " + mMaxNumMeteringAreas);
+
             // 设置对焦模式
             List<String> focusModes = parameters.getSupportedFocusModes();
             if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                mIsAutoFocusSupported = true;
             } else if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                mIsAutoFocusSupported = true;
+            } else {
+                mIsAutoFocusSupported = false;
             }
+
+
+
+            // 检查设备是否支持闪光灯
+//            List<String> flashModes = parameters.getSupportedFlashModes();
+//            if (flashModes != null && flashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+//                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH); // 开启常亮补光
+//            } else {
+//                Log.e("Camera1", "设备不支持闪光灯补光");
+//            }
             
             // 设置预览格式为NV21
             parameters.setPreviewFormat(android.graphics.ImageFormat.NV21);
@@ -278,6 +476,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             
             Log.d(TAG, "摄像头参数设置完成");
             
+            initAutoFocus();
             // 如果TextureView已经准备好，立即开始预览
             if (mTextureView.isAvailable()) {
                 Log.d(TAG, "TextureView已准备好，开始预览");
@@ -291,6 +490,55 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         }
     }
     
+    private void initAutoFocus() {
+        mAutoFocusCallback = new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(boolean success, Camera camera) {
+                Log.d(TAG, "自动对焦完成: " + (success ? "成功" : "失败"));
+                // 对焦完成后，延迟一段时间再次启动自动对焦
+                if (mAutoFocusHandler != null) {
+                    //mAutoFocusHandler.postDelayed(mAutoFocusRunnable, 3000);
+                }
+            }
+        };
+        
+        mAutoFocusHandler = new Handler();
+        mAutoFocusRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (mCamera != null && mIsAutoFocusSupported && !mIsRecording) {
+                    try {
+                        Camera.Parameters parameters = mCamera.getParameters();
+                        if (parameters.getFocusMode().equals(Camera.Parameters.FOCUS_MODE_AUTO)) {
+                            // 清除之前的对焦区域
+                            parameters.setFocusAreas(null);
+                            parameters.setMeteringAreas(null);
+                            mCamera.setParameters(parameters);
+                            
+                            // 启动自动对焦
+                            mCamera.autoFocus(mAutoFocusCallback);
+                            Log.d(TAG, "启动自动对焦");
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "自动对焦失败", e);
+                    }
+                }
+            }
+        };
+    }
+
+    private void startAutoFocus() {
+        if (mAutoFocusHandler != null && mAutoFocusRunnable != null) {
+            mAutoFocusHandler.post(mAutoFocusRunnable);
+        }
+    }
+
+    private void stopAutoFocus() {
+        if (mAutoFocusHandler != null && mAutoFocusRunnable != null) {
+            mAutoFocusHandler.removeCallbacks(mAutoFocusRunnable);
+        }
+    }
+
     private Camera.Size getBestPreviewSize(List<Camera.Size> sizes) {
         Camera.Size bestSize = null;
         for (Camera.Size size : sizes) {
@@ -654,6 +902,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             Log.d(TAG, "startPreview: 开始预览");
             mCamera.startPreview();
             mIsPreviewRunning = true;
+
+             // 启动自动对焦
+            if (mIsAutoFocusSupported) {
+                startAutoFocus();
+            }
             
             Log.d(TAG, "预览启动成功！");
             
@@ -671,6 +924,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             mCamera.stopPreview();
             mIsPreviewRunning = false;
             
+            // 停止自动对焦
+            stopAutoFocus();
             Log.d(TAG, "预览停止");
         }
     }
@@ -686,6 +941,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             mCameraSurface.release();
             mCameraSurface = null;
         }
+
+        stopAutoFocus();
+        mAutoFocusHandler = null;
+        mAutoFocusRunnable = null;
+        mAutoFocusCallback = null;
     }
     
     @Override
