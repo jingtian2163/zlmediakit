@@ -16,7 +16,7 @@ public class H264Encoder {
     private static final String TAG = "H264Encoder";
     private static final String MIME_TYPE = "video/avc";
     private static final int IFRAME_INTERVAL = 2; // 2秒GOP
-    private static final int BITRATE = 2000000; // 10Mbps
+    private static final int BITRATE = 4000000; // 10Mbps
     private static final int FRAMERATE = 30;
     
     // 加载native库
@@ -324,10 +324,10 @@ public class H264Encoder {
             }
             
             // 写入文件
-            if (mFileOutputStream != null) {
-                mFileOutputStream.write(outputData);
-                mFileOutputStream.flush();
-            }
+            // if (mFileOutputStream != null) {
+            //     mFileOutputStream.write(outputData);
+            //     mFileOutputStream.flush();
+            // }
             
             // 推送到RTSP流
             if (mEnableStreaming && mPusherPtr != 0 && outputData.length > 15) {
@@ -339,8 +339,6 @@ public class H264Encoder {
                 }
             }
             
-        } catch (IOException e) {
-            Log.e(TAG, "Error writing encoded data: " + e.getMessage());
         } catch (Exception e) {
             Log.e(TAG, "Error processing encoded data: " + e.getMessage());
         }

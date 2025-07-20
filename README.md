@@ -57,3 +57,29 @@ cd /Users/olaola/Desktop/ola/opensource/ZLMediaKit_副本/nacktest
 cd /Users/olaola/Desktop/ola/opensource/ZLMediaKit_副本/build
 cmake ..
 make -j8
+
+
+//推拉流
+curl -X POST http://127.0.0.1/index/api/addStreamProxy \
+  -d "secret=cAB6i1o1dHCtlhe4WXMvfeu7oaZcqmbK" \
+  -d "vhost=__defaultVhost__" \
+  -d "app=live" \
+  -d "stream=vrcamera" \
+  -d "url=rtsp://192.168.31.44:8554/live/vrcamera"
+
+
+
+
+curl -X 'POST' \
+  'http://localhost/index/api/delStreamProxy?secret=cAB6i1o1dHCtlhe4WXMvfeu7oaZcqmbK&key=__defaultVhost__%2Flive%2Fvrcamera' \
+  -H 'accept: application/json' \
+  -d ''
+
+
+
+  curl -X POST http://127.0.0.1/index/api/addStreamProxy \
+  -d "secret=cAB6i1o1dHCtlhe4WXMvfeu7oaZcqmbK" \
+  -d "vhost=__defaultVhost__" \
+  -d "app=live" \
+  -d "stream=vrcamera" \
+  -d "url=srt://192.168.31.44:9000?streamid=#!::r=live/vrcamera"

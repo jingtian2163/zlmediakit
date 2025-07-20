@@ -37,7 +37,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     private TextureView mTextureView;
     private Camera mCamera;
     private boolean mIsPreviewRunning = false;
-    private boolean mIsFrontCamera = false;
+    private boolean mIsFrontCamera = true;
     
     private H264Encoder mH264Encoder;
     private Button mBtnSwitch;
@@ -342,7 +342,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             File outputFile = createOutputFile();
             
             // RTSP推流地址
-            String rtspUrl = "rtsp://127.0.0.1:8554/live/vrcamera1";
+            String rtspUrl = "rtsp://127.0.0.1:8554/live/vrcamera";
             
             // 创建流回调接口
             H264Encoder.StreamCallback streamCallback = new H264Encoder.StreamCallback() {
