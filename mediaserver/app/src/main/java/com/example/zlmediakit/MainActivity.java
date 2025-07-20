@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // btnCamera.setOnClickListener(new View.OnClickListener() {
         //     @Override
         //     public void onClick(View v) {
-        //         Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+        //         Intent intent = new Intent(MainActivity.this, Camera2Activity.class);
         //         startActivity(intent);
         //     }
         // });
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions();
         initSSLCertificate();
 
-        Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+        Intent intent = new Intent(MainActivity.this, Camera2Activity.class);
         startActivity(intent);
     }
 

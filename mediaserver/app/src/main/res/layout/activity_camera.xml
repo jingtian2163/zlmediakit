@@ -34,6 +34,13 @@
             android:text="切换摄像头"
             android:textColor="#FFFFFF"
             android:backgroundTint="#4444FF" />
+        <Button
+            android:id="@+id/btn_flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="补光"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4444FF" />
 
     </LinearLayout>
 
