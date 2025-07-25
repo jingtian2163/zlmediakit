@@ -132,16 +132,16 @@ public class Camera2Activity extends Activity {
             }
         });
 
-        startRecordingWithDelay();
+        //startRecordingWithDelay();
         // 开始/停止录制按钮
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mIsRecording) {
-                    //stopRecording();
+                    stopRecording();
                 } else {
-                    //startRecording();
-                    startRecordingWithDelay();
+                    startRecording();
+                    //startRecordingWithDelay();
                 }
             }
         });
@@ -878,13 +878,8 @@ public class Camera2Activity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
          Toast.makeText(this, "当前界面不允许退出", Toast.LENGTH_SHORT).show();
-        // if (mIsRecording) {
-        //     stopRecording();
-        // }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, "当前界面不允许退出", Toast.LENGTH_SHORT).show();
+         if (mIsRecording) {
+             stopRecording();
+         }
     }
 }
