@@ -239,6 +239,26 @@ public class Camera2Activity extends Activity {
             for (String cameraId : cameraIds) {
                 CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(cameraId);
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+
+                // 检查对焦能力
+                int[] afModes = characteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+                if (afModes == null || afModes.length == 0) {
+                    Log.d(TAG, "摄像头 " + cameraId + " 不支持自动对焦");
+                    continue;
+                }
+
+                boolean hasContinuousVideo = false;
+                for (int mode : afModes) {
+                    if (mode == CameraCharacteristics.CONTROL_AF_MODE_CONTINUOUS_VIDEO) {
+                        hasContinuousVideo = true;
+                        break;
+                    }
+                }
+
+//                if (!hasContinuousVideo) {
+//                    Log.d(TAG, "摄像头 " + cameraId + " 不支持CONTINUOUS_VIDEO对焦模式");
+//                    continue;
+//                }
                 
                  // 检查闪光灯支持
                 Boolean flashAvailable = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
@@ -438,47 +458,38 @@ public class Camera2Activity extends Activity {
 
     private void handleTouchFocus(MotionEvent event) {
         if (mCameraDevice == null || mCharacteristics == null || mActiveArraySize == null) {
+            Log.w(TAG, "handleTouchFocus: camera or characteristics not ready");
             return;
         }
-        
         try {
             mManualFocusEngaged = true;
-            
-            // 获取触摸点坐标
             float x = event.getX();
             float y = event.getY();
-            
-            // 计算对焦区域
+            Log.d(TAG, "handleTouchFocus: touch at (" + x + ", " + y + ")");
             MeteringRectangle focusAreaTouch = getFocusArea(x, y);
-            
-            // 创建对焦请求
+            Log.d(TAG, "handleTouchFocus: focusAreaTouch=" + focusAreaTouch.toString());
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                     CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                     CaptureRequest.CONTROL_AF_MODE_OFF);
+            Log.d(TAG, "handleTouchFocus: send CANCEL trigger");
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
-            
-            // 设置对焦区域
             if (isMeteringAreaAFSupported()) {
                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_REGIONS,
                         new MeteringRectangle[]{focusAreaTouch});
+                Log.d(TAG, "handleTouchFocus: set CONTROL_AF_REGIONS");
             }
-            
-            // 设置测光区域
             if (isMeteringAreaAESupported()) {
                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_REGIONS,
                         new MeteringRectangle[]{focusAreaTouch});
+                Log.d(TAG, "handleTouchFocus: set CONTROL_AE_REGIONS");
             }
-            
-            // 触发自动对焦
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                     CaptureRequest.CONTROL_AF_MODE_AUTO);
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                     CameraMetadata.CONTROL_AF_TRIGGER_START);
-            
-            // 提交对焦请求
+            Log.d(TAG, "handleTouchFocus: send START trigger");
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mBackgroundHandler);
-            
         } catch (CameraAccessException e) {
             Log.e(TAG, "触摸对焦失败", e);
         }
@@ -505,6 +516,7 @@ public class Camera2Activity extends Activity {
         int right = Math.min(mActiveArraySize.width(), left + areaSize);
         int bottom = Math.min(mActiveArraySize.height(), top + areaSize);
         
+        Log.d(TAG, "getFocusArea: sensorX=" + sensorX + ", sensorY=" + sensorY + ", left=" + left + ", top=" + top + ", right=" + right + ", bottom=" + bottom);
         return new MeteringRectangle(left, top, right - left, bottom - top, 1000);
     }
 
@@ -524,10 +536,10 @@ public class Camera2Activity extends Activity {
         public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                        @NonNull CaptureRequest request,
                                        @NonNull TotalCaptureResult result) {
+            Log.d(TAG, "onCaptureCompleted: manualFocusEngaged=" + mManualFocusEngaged);
             if (mManualFocusEngaged) {
                 mManualFocusEngaged = false;
-                
-                // 恢复连续自动对焦
+                Log.d(TAG, "onCaptureCompleted: restoring CONTINUOUS_VIDEO AF mode in 3s");
                 mBackgroundHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -536,6 +548,7 @@ public class Camera2Activity extends Activity {
                                     CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
                             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                                     CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
+                            Log.d(TAG, "onCaptureCompleted: setRepeatingRequest CONTINUOUS_VIDEO");
                             mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
                                     null, mBackgroundHandler);
                         } catch (CameraAccessException e) {
@@ -641,7 +654,7 @@ public class Camera2Activity extends Activity {
         mBtnSwitch.setEnabled(true);
         
         // 重新创建相机会话，移除编码器Surface
-        createCameraPreviewSession();
+        //createCameraPreviewSession();
         
         Toast.makeText(this, "录制结束", Toast.LENGTH_SHORT).show();
     }
@@ -716,8 +729,14 @@ public class Camera2Activity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mIsRecording) {
-            stopRecording();
-        }
+         Toast.makeText(this, "当前界面不允许退出", Toast.LENGTH_SHORT).show();
+        // if (mIsRecording) {
+        //     stopRecording();
+        // }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "当前界面不允许退出", Toast.LENGTH_SHORT).show();
     }
 }

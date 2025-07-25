@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // 设置相机按钮点击事件
-        // Button btnCamera = findViewById(R.id.btn_camera);
-        // btnCamera.setOnClickListener(new View.OnClickListener() {
-        //     @Override
-        //     public void onClick(View v) {
-        //         Intent intent = new Intent(MainActivity.this, Camera2Activity.class);
-        //         startActivity(intent);
-        //     }
-        // });
+        Button btnCamera = findViewById(R.id.btn_camera);
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Camera2Activity.class);
+                startActivity(intent);
+            }
+        });
 
         debugPrintAssetsList(); // 添加这行来打印assets目录内容
         requestPermissions();
