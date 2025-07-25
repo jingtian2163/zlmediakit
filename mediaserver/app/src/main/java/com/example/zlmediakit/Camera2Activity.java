@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.util.Size;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -44,7 +45,8 @@ public class Camera2Activity extends Activity {
     
     // UI组件
     private TextureView mTextureView;
-    private Button mBtnSwitch;
+    private Button mBtnScaleBig;
+    private Button mBtnScaleSmall;
     private Button mBtnStart;
     private Button mBtnFlash;
     
@@ -73,6 +75,13 @@ public class Camera2Activity extends Activity {
     private boolean mFlashLightEnabled = false;
     private static final float LOW_LIGHT_THRESHOLD = 0.3f;
 
+    private float mCurrentZoom = 1.0f; // 当前缩放比例，默认1
+    private static final float MAX_ZOOM = 4.0f; // 最大缩放4倍
+    private static final float MIN_ZOOM = 1.0f; // 最小缩放1倍
+
+    private Handler mDelayHandler = new Handler();
+    private Runnable mDelayRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +96,8 @@ public class Camera2Activity extends Activity {
 
     private void initViews() {
         mTextureView = findViewById(R.id.texture_view);
-        mBtnSwitch = findViewById(R.id.btn_switch_camera);
+        mBtnScaleBig = findViewById(R.id.btn_scale_big);
+        mBtnScaleSmall = findViewById(R.id.btn_scale_small);
         mBtnStart = findViewById(R.id.btn_start_record);
         mBtnFlash = findViewById(R.id.btn_flash);
         
@@ -105,27 +115,33 @@ public class Camera2Activity extends Activity {
                 return false;
             }
         });
+
         
         // 切换摄像头按钮
-        mBtnSwitch.setOnClickListener(new View.OnClickListener() {
+        mBtnScaleBig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mIsRecording) {
-                    switchCamera();
-                } else {
-                    Toast.makeText(Camera2Activity.this, "录制中不能切换摄像头", Toast.LENGTH_SHORT).show();
-                }
+                zoomIn();
             }
         });
-        
+
+        mBtnScaleSmall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomOut();
+            }
+        });
+
+        startRecordingWithDelay();
         // 开始/停止录制按钮
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mIsRecording) {
-                    stopRecording();
+                    //stopRecording();
                 } else {
-                    startRecording();
+                    //startRecording();
+                    startRecordingWithDelay();
                 }
             }
         });
@@ -138,6 +154,138 @@ public class Camera2Activity extends Activity {
                 mBtnStart.setText(mFlashLightEnabled ? "关闭补光" : "开启补光");
             }
         });
+    }
+
+    // 添加延时开始录制的方法
+    private void startRecordingWithDelay() {
+        // 创建延时任务
+        mDelayRunnable = new Runnable() {
+            @Override
+            public void run() {
+                startRecording(); // 实际开始录制
+            }
+        };
+
+        // 延时2000ms执行
+        mDelayHandler.postDelayed(mDelayRunnable, 1000);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG, "onKeyDown keyCode:" + keyCode+",event:"+event);
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                // 可能是旋钮正转
+                zoomIn();
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                // 可能是旋钮反转
+                zoomOut();
+                return true;
+            // 其他特定设备的按键码
+            case KeyEvent.KEYCODE_STEM_1:
+                // 某些设备的专用旋钮按键
+                //handleStemEvent(event);
+                return true;
+            case KeyEvent.KEYCODE_STEM_2:
+                // 另一个专用旋钮按键
+                //handleStemEvent(event);
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+    private boolean isZoomSupported() {
+        if (mCharacteristics == null) {
+            return false;
+        }
+        Float maxZoom = mCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+        return maxZoom != null && maxZoom >= 1.0f;
+    }
+
+    /**
+     * 获取当前缩放比例
+     */
+    public float getCurrentZoom() {
+        return mCurrentZoom;
+    }
+
+    /**
+     * 放大2倍
+     */
+    public void zoomIn() {
+        float targetZoom = mCurrentZoom * 2;
+        if (targetZoom > MAX_ZOOM) {
+            Log.d(TAG, "已达到最大缩放倍数: " + MAX_ZOOM);
+            return;
+        }
+        setZoom(targetZoom);
+    }
+
+     /**
+     * 缩小2倍
+     */
+    public void zoomOut() {
+        float targetZoom = mCurrentZoom / 2;
+        if (targetZoom < MIN_ZOOM) {
+            Log.d(TAG, "已达到最小缩放倍数: " + MIN_ZOOM);
+            return;
+        }
+        setZoom(targetZoom);
+    }
+
+    /**
+     * 设置具体缩放级别
+     * @param zoomLevel 缩放级别，范围1.0-4.0
+     */
+    private void setZoom(float zoomLevel) {
+        if (!isZoomSupported()) {
+            Log.w(TAG, "该设备不支持缩放");
+            return;
+        }
+        
+        if (mPreviewRequestBuilder == null || mCaptureSession == null || mActiveArraySize == null) {
+            Log.w(TAG, "相机未初始化完成，无法缩放");
+            return;
+        }
+        
+        // 限制缩放范围
+        zoomLevel = Math.max(MIN_ZOOM, Math.min(zoomLevel, MAX_ZOOM));
+        
+        // 计算缩放区域（中心缩放）
+        int centerX = mActiveArraySize.width() / 2;
+        int centerY = mActiveArraySize.height() / 2;
+        int deltaX = (int)((0.5f * mActiveArraySize.width()) / zoomLevel);
+        int deltaY = (int)((0.5f * mActiveArraySize.height()) / zoomLevel);
+        
+        Rect zoomRect = new Rect(
+            Math.max(0, centerX - deltaX),
+            Math.max(0, centerY - deltaY),
+            Math.min(mActiveArraySize.width(), centerX + deltaX),
+            Math.min(mActiveArraySize.height(), centerY + deltaY)
+        );
+        
+        try {
+            // 设置缩放区域
+            mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, zoomRect);
+            mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, mBackgroundHandler);
+            
+            // 更新当前缩放比例
+            mCurrentZoom = zoomLevel;
+            Log.d(TAG, "缩放设置成功，当前比例: " + mCurrentZoom);
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "设置缩放失败", e);
+        }
+    }
+    
+    /**
+     * 重置为原始大小(1倍)
+     */
+    public void resetZoom() {
+        setZoom(1.0f);
     }
 
     /**
@@ -625,7 +773,7 @@ public class Camera2Activity extends Activity {
             
             mIsRecording = true;
             mBtnStart.setText("停止录制");
-            mBtnSwitch.setEnabled(false);
+            //mBtnSwitch.setEnabled(false);
             
             // 重新创建相机会话，包含编码器Surface
             createCameraPreviewSession();
@@ -651,7 +799,7 @@ public class Camera2Activity extends Activity {
         
         mIsRecording = false;
         mBtnStart.setText("开始录制");
-        mBtnSwitch.setEnabled(true);
+        //mBtnSwitch.setEnabled(true);
         
         // 重新创建相机会话，移除编码器Surface
         //createCameraPreviewSession();

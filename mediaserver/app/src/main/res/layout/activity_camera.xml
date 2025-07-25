@@ -28,10 +28,17 @@
             android:backgroundTint="#FF4444" />
 
         <Button
-            android:id="@+id/btn_switch_camera"
+            android:id="@+id/btn_scale_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="切换摄像头"
+            android:text="放大"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4444FF" />
+        <Button
+            android:id="@+id/btn_scale_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缩小"
             android:textColor="#FFFFFF"
             android:backgroundTint="#4444FF" />
         <Button
