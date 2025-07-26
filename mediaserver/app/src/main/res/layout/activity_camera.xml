@@ -48,6 +48,13 @@
             android:text="补光"
             android:textColor="#FFFFFF"
             android:backgroundTint="#4444FF" />
+        <Button
+            android:id="@+id/btn_takepic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拍照"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4444FF" />
 
     </LinearLayout>
 

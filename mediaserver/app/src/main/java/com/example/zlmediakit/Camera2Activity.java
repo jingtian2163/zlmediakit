@@ -49,6 +49,7 @@ public class Camera2Activity extends Activity {
     private Button mBtnScaleSmall;
     private Button mBtnStart;
     private Button mBtnFlash;
+    private Button mBtntakepic;
     
     // Camera2 相关
     private String mCameraId;
@@ -66,6 +67,7 @@ public class Camera2Activity extends Activity {
     private H264Encoder mH264Encoder;
     private Surface mEncoderSurface;
     private boolean mIsRecording = false;
+    private boolean mDestroyting = false;
     private boolean mIsFrontCamera = false;
     
     // 自动对焦相关
@@ -92,6 +94,7 @@ public class Camera2Activity extends Activity {
         
         initViews();
         checkPermissions();
+       
     }
 
     private void initViews() {
@@ -100,6 +103,7 @@ public class Camera2Activity extends Activity {
         mBtnScaleSmall = findViewById(R.id.btn_scale_small);
         mBtnStart = findViewById(R.id.btn_start_record);
         mBtnFlash = findViewById(R.id.btn_flash);
+        mBtntakepic= findViewById(R.id.btn_takepic);
         
         // 设置TextureView监听器
         mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -152,6 +156,56 @@ public class Camera2Activity extends Activity {
                 mFlashLightEnabled = !mFlashLightEnabled;
                 setFlashLight(mFlashLightEnabled);
                 mBtnStart.setText(mFlashLightEnabled ? "关闭补光" : "开启补光");
+            }
+        });
+
+        mBtntakepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                            ZLMediaKitClient client = new ZLMediaKitClient(
+                                    "http://127.0.0.1:8080",
+                                    "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
+                            );
+                            String firstIp = "";
+                            String requestIp;
+                            HttpShortConnection     httpClient = new HttpShortConnection();
+                            try {
+                                // 获取第一个客户端IP
+                                firstIp = client.getFirstExternalClientIp();
+                                System.out.println("第一个客户端IP: " + firstIp);
+                            } catch (IOException e) {
+                                System.err.println("请求失败: " + e.getMessage());
+                            }
+
+                            if(!firstIp.isEmpty())
+                            {
+                                // 初始化HTTP客户端
+                                requestIp = "http://" + firstIp + ":8080";
+                                Log.e(TAG, "Request requestIp:" + requestIp);
+                            }else {
+                                return;
+                            }
+
+                            // 准备请求数据
+                            String jsonBody = "{\"eventtype\":\"TAKEPIC\",\"value\":\"1\"}";
+                            // 发送请求
+                            httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
+                                            @Override
+                                            public void onSuccess(String response) {
+                                                Log.i(TAG, "请求成功: " + response);
+                                            }
+
+                                            @Override
+                                            public void onFailure(String error) {
+                                                Log.e(TAG, "请求失败: " + error);
+                                            }
+                                        });
+                                Log.d(TAG, "mBtntakepic take pic");
+                            }
+                    }).start();
             }
         });
     }
@@ -802,7 +856,9 @@ public class Camera2Activity extends Activity {
         //mBtnSwitch.setEnabled(true);
         
         // 重新创建相机会话，移除编码器Surface
-        //createCameraPreviewSession();
+        if(!mDestroyting) {
+            createCameraPreviewSession();
+        }
         
         Toast.makeText(this, "录制结束", Toast.LENGTH_SHORT).show();
     }
@@ -877,6 +933,7 @@ public class Camera2Activity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+         mDestroyting = true;
          Toast.makeText(this, "当前界面不允许退出", Toast.LENGTH_SHORT).show();
          if (mIsRecording) {
              stopRecording();
