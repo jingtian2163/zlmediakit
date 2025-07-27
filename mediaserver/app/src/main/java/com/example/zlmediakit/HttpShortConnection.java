@@ -35,7 +35,7 @@ public class HttpShortConnection {
                 .url(url)
                 .post(body)
                 .build();
-
+        Log.e(TAG, "Request sendJsonRequest: " + request.toString());
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

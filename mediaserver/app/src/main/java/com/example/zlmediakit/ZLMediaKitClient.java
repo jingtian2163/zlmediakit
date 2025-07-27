@@ -37,7 +37,7 @@ public class ZLMediaKitClient {
                 return ip;
             }
         }
-        return null;
+        return "";
     }
 
     /**
