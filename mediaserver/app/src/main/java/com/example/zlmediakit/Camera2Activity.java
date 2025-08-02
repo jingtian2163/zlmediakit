@@ -155,7 +155,7 @@ public class Camera2Activity extends Activity {
             public void onClick(View v) {
                 mFlashLightEnabled = !mFlashLightEnabled;
                 setFlashLight(mFlashLightEnabled);
-                mBtnStart.setText(mFlashLightEnabled ? "关闭补光" : "开启补光");
+                mBtnFlash.setText(mFlashLightEnabled ? "关闭补光" : "开启补光");
             }
         });
 
@@ -826,7 +826,7 @@ public class Camera2Activity extends Activity {
             mEncoderSurface = mH264Encoder.start();
             
             mIsRecording = true;
-            mBtnStart.setText("停止录制");
+            mBtnStart.setText("停止推流");
             //mBtnSwitch.setEnabled(false);
             
             // 重新创建相机会话，包含编码器Surface
@@ -852,7 +852,7 @@ public class Camera2Activity extends Activity {
         }
         
         mIsRecording = false;
-        mBtnStart.setText("开始录制");
+        mBtnStart.setText("开始推流");
         //mBtnSwitch.setEnabled(true);
         
         // 重新创建相机会话，移除编码器Surface
