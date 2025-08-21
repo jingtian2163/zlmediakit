@@ -183,7 +183,7 @@ public class Camera2Activity extends Activity {
                             if(!firstIp.isEmpty())
                             {
                                 // 初始化HTTP客户端
-                                requestIp = "http://" + firstIp + ":8081";
+                                requestIp = "http://" + firstIp + ":18081";
                                 Log.e(TAG, "Request requestIp:" + requestIp);
                             }else {
                                 return;
