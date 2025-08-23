@@ -163,53 +163,11 @@ public class Camera2Activity extends Activity {
             }
         });
 
+        // 拍照按钮
         mBtntakepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                            ZLMediaKitClient client = new ZLMediaKitClient(
-                                    "http://127.0.0.1:8080",
-                                    "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
-                            );
-                            String firstIp = "";
-                            String requestIp;
-                            HttpShortConnection     httpClient = new HttpShortConnection();
-                            try {
-                                // 获取第一个客户端IP
-                                firstIp = client.getFirstExternalClientIp();
-                                System.out.println("第一个客户端IP: " + firstIp);
-                            } catch (IOException e) {
-                                System.err.println("请求失败: " + e.getMessage());
-                            }
-
-                            if(!firstIp.isEmpty())
-                            {
-                                // 初始化HTTP客户端
-                                requestIp = "http://" + firstIp + ":18081";
-                                Log.e(TAG, "Request requestIp:" + requestIp);
-                            }else {
-                                return;
-                            }
-
-                            // 准备请求数据
-                            String jsonBody = "{\"eventtype\":\"TAKEPIC\",\"value\":\"1\"}";
-                            // 发送请求
-                            httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
-                                            @Override
-                                            public void onSuccess(String response) {
-                                                Log.i(TAG, "请求成功: " + response);
-                                            }
-
-                                            @Override
-                                            public void onFailure(String error) {
-                                                Log.e(TAG, "请求失败: " + error);
-                                            }
-                                        });
-                                Log.d(TAG, "mBtntakepic take pic");
-                            }
-                    }).start();
+                sendEventToServer(EventType.TAKEPIC);
             }
         });
 
@@ -217,50 +175,7 @@ public class Camera2Activity extends Activity {
         mBtnStartRecordMp4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                            ZLMediaKitClient client = new ZLMediaKitClient(
-                                    "http://127.0.0.1:8080",
-                                    "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
-                            );
-                            String firstIp = "";
-                            String requestIp;
-                            HttpShortConnection     httpClient = new HttpShortConnection();
-                            try {
-                                // 获取第一个客户端IP
-                                firstIp = client.getFirstExternalClientIp();
-                                System.out.println("第一个客户端IP: " + firstIp);
-                            } catch (IOException e) {
-                                System.err.println("请求失败: " + e.getMessage());
-                            }
-
-                            if(!firstIp.isEmpty())
-                            {
-                                // 初始化HTTP客户端
-                                requestIp = "http://" + firstIp + ":18081";
-                                Log.e(TAG, "Request requestIp:" + requestIp);
-                            }else {
-                                return;
-                            }
-
-                            // 准备请求数据
-                            String jsonBody = "{\"eventtype\":\"STARTRECORDMP4\",\"value\":\"1\"}";
-                            // 发送请求
-                            httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
-                                            @Override
-                                            public void onSuccess(String response) {
-                                                Log.i(TAG, "开始录制MP4请求成功: " + response);
-                                            }
-
-                                            @Override
-                                            public void onFailure(String error) {
-                                                Log.e(TAG, "开始录制MP4请求失败: " + error);
-                                            }
-                                        });
-                                Log.d(TAG, "开始录制MP4按钮点击");
-                            }
-                    }).start();
+                sendEventToServer(EventType.STARTRECORDMP4);
             }
         });
 
@@ -268,52 +183,87 @@ public class Camera2Activity extends Activity {
         mBtnStopRecordMp4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                            ZLMediaKitClient client = new ZLMediaKitClient(
-                                    "http://127.0.0.1:8080",
-                                    "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
-                            );
-                            String firstIp = "";
-                            String requestIp;
-                            HttpShortConnection     httpClient = new HttpShortConnection();
-                            try {
-                                // 获取第一个客户端IP
-                                firstIp = client.getFirstExternalClientIp();
-                                System.out.println("第一个客户端IP: " + firstIp);
-                            } catch (IOException e) {
-                                System.err.println("请求失败: " + e.getMessage());
-                            }
-
-                            if(!firstIp.isEmpty())
-                            {
-                                // 初始化HTTP客户端
-                                requestIp = "http://" + firstIp + ":18081";
-                                Log.e(TAG, "Request requestIp:" + requestIp);
-                            }else {
-                                return;
-                            }
-
-                            // 准备请求数据
-                            String jsonBody = "{\"eventtype\":\"STOPRECORDMP4\",\"value\":\"1\"}";
-                            // 发送请求
-                            httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
-                                            @Override
-                                            public void onSuccess(String response) {
-                                                Log.i(TAG, "停止录制MP4请求成功: " + response);
-                                            }
-
-                                            @Override
-                                            public void onFailure(String error) {
-                                                Log.e(TAG, "停止录制MP4请求失败: " + error);
-                                            }
-                                        });
-                                Log.d(TAG, "停止录制MP4按钮点击");
-                            }
-                    }).start();
+                sendEventToServer(EventType.STOPRECORDMP4);
             }
         });
+    }
+
+    /**
+     * 统一的事件发送接口 - 向所有外部客户端IP发送事件
+     * @param eventType 事件类型枚举
+     */
+    private void sendEventToServer(EventType eventType) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                Log.i(TAG, "=== 开始发送事件: " + eventType.getDisplayName() + " ===");
+                Log.i(TAG, "事件处理开始时间: " + startTime + " (" + new java.util.Date(startTime) + ")");
+
+                ZLMediaKitClient client = new ZLMediaKitClient(
+                        "http://127.0.0.1:8080",
+                        "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
+                );
+                List<String> externalIps;
+                HttpShortConnection httpClient = new HttpShortConnection();
+
+                try {
+                    // 获取所有外部客户端IP
+                    externalIps = client.getAllExternalClientIps();
+                    Log.i(TAG, "获取到外部IP数量: " + externalIps.size());
+                    Log.i(TAG, "外部IP列表: " + externalIps.toString());
+                } catch (IOException e) {
+                    Log.e(TAG, "获取客户端IP失败: " + e.getMessage());
+                    return;
+                }
+
+                if(externalIps.isEmpty()) {
+                    Log.w(TAG, "没有找到外部客户端IP，无法发送事件: " + eventType.getDisplayName());
+                    return;
+                }
+
+                // 使用枚举生成请求数据
+                String jsonBody = eventType.toJsonBody();
+                Log.i(TAG, "准备发送事件到 " + externalIps.size() + " 个客户端");
+                Log.i(TAG, "事件JSON: " + jsonBody);
+
+                // 向每个外部IP发送事件
+                for (int i = 0; i < externalIps.size(); i++) {
+                    String ip = externalIps.get(i);
+                    String requestIp = "http://" + ip + ":18081";
+
+                    Log.i(TAG, "发送事件到客户端 " + (i + 1) + "/" + externalIps.size() + ": " + requestIp);
+
+                    // 为每个IP创建独立的回调，包含IP信息
+                    final String currentIp = ip;
+                    final int currentIndex = i + 1;
+
+                    httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
+                        @Override
+                        public void onSuccess(String response) {
+                            long successTime = System.currentTimeMillis();
+                            Log.i(TAG, "=== " + eventType.getDisplayName() + " 事件成功 [" + currentIndex + "/" + externalIps.size() + "] ===");
+                            Log.i(TAG, "目标IP: " + currentIp);
+                            Log.i(TAG, "成功时间: " + successTime + " (" + new java.util.Date(successTime) + ")");
+                            Log.i(TAG, "耗时: " + (successTime - startTime) + "ms");
+                            Log.i(TAG, "响应: " + response);
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            long failureTime = System.currentTimeMillis();
+                            Log.e(TAG, "=== " + eventType.getDisplayName() + " 事件失败 [" + currentIndex + "/" + externalIps.size() + "] ===");
+                            Log.e(TAG, "目标IP: " + currentIp);
+                            Log.e(TAG, "失败时间: " + failureTime + " (" + new java.util.Date(failureTime) + ")");
+                            Log.e(TAG, "耗时: " + (failureTime - startTime) + "ms");
+                            Log.e(TAG, "错误: " + error);
+                        }
+                    });
+                }
+
+                Log.i(TAG, eventType.getDisplayName() + " 事件已发送到 " + externalIps.size() + " 个客户端");
+            }
+        }).start();
     }
 
     // 添加延时开始录制的方法

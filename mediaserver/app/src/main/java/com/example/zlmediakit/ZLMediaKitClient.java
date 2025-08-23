@@ -27,15 +27,13 @@ public class ZLMediaKitClient {
     }
 
     /**
-     * 获取第一个非本地连接的客户端IP
-     * @return 第一个非127.0.0.1的peer_ip，如果没有则返回null
+     * 获取第一个非本地连接的客户端IP（保持向后兼容）
+     * @return 第一个非127.0.0.1的peer_ip，如果没有则返回空字符串
      */
     public String getFirstExternalClientIp() throws IOException {
-        List<String> ips = getAllClientIps();
-        for (String ip : ips) {
-            if (!"127.0.0.1".equals(ip)) {
-                return ip;
-            }
+        List<String> externalIps = getAllExternalClientIps();
+        if (!externalIps.isEmpty()) {
+            return externalIps.get(0);
         }
         return "";
     }
