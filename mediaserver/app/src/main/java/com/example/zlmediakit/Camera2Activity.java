@@ -47,9 +47,11 @@ public class Camera2Activity extends Activity {
     private TextureView mTextureView;
     private Button mBtnScaleBig;
     private Button mBtnScaleSmall;
-    private Button mBtnStart;
+    private Button mBtnStartpush;
     private Button mBtnFlash;
     private Button mBtntakepic;
+    private Button mBtnStartRecordMp4;
+    private Button mBtnStopRecordMp4;
     
     // Camera2 相关
     private String mCameraId;
@@ -101,9 +103,11 @@ public class Camera2Activity extends Activity {
         mTextureView = findViewById(R.id.texture_view);
         mBtnScaleBig = findViewById(R.id.btn_scale_big);
         mBtnScaleSmall = findViewById(R.id.btn_scale_small);
-        mBtnStart = findViewById(R.id.btn_start_record);
+        mBtnStartpush = findViewById(R.id.btn_start_push);
         mBtnFlash = findViewById(R.id.btn_flash);
         mBtntakepic= findViewById(R.id.btn_takepic);
+        mBtnStartRecordMp4 = findViewById(R.id.btn_start_record_mp4);
+        mBtnStopRecordMp4 = findViewById(R.id.btn_stop_record_mp4);
         
         // 设置TextureView监听器
         mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -138,13 +142,13 @@ public class Camera2Activity extends Activity {
 
         //startRecordingWithDelay();
         // 开始/停止录制按钮
-        mBtnStart.setOnClickListener(new View.OnClickListener() {
+        mBtnStartpush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mIsRecording) {
-                    stopRecording();
+                    stopPushing();
                 } else {
-                    startRecording();
+                    startPushing();
                     //startRecordingWithDelay();
                 }
             }
@@ -208,6 +212,108 @@ public class Camera2Activity extends Activity {
                     }).start();
             }
         });
+
+        // 开始录制MP4按钮
+        mBtnStartRecordMp4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                            ZLMediaKitClient client = new ZLMediaKitClient(
+                                    "http://127.0.0.1:8080",
+                                    "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
+                            );
+                            String firstIp = "";
+                            String requestIp;
+                            HttpShortConnection     httpClient = new HttpShortConnection();
+                            try {
+                                // 获取第一个客户端IP
+                                firstIp = client.getFirstExternalClientIp();
+                                System.out.println("第一个客户端IP: " + firstIp);
+                            } catch (IOException e) {
+                                System.err.println("请求失败: " + e.getMessage());
+                            }
+
+                            if(!firstIp.isEmpty())
+                            {
+                                // 初始化HTTP客户端
+                                requestIp = "http://" + firstIp + ":18081";
+                                Log.e(TAG, "Request requestIp:" + requestIp);
+                            }else {
+                                return;
+                            }
+
+                            // 准备请求数据
+                            String jsonBody = "{\"eventtype\":\"STARTRECORDMP4\",\"value\":\"1\"}";
+                            // 发送请求
+                            httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
+                                            @Override
+                                            public void onSuccess(String response) {
+                                                Log.i(TAG, "开始录制MP4请求成功: " + response);
+                                            }
+
+                                            @Override
+                                            public void onFailure(String error) {
+                                                Log.e(TAG, "开始录制MP4请求失败: " + error);
+                                            }
+                                        });
+                                Log.d(TAG, "开始录制MP4按钮点击");
+                            }
+                    }).start();
+            }
+        });
+
+        // 停止录制MP4按钮
+        mBtnStopRecordMp4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                            ZLMediaKitClient client = new ZLMediaKitClient(
+                                    "http://127.0.0.1:8080",
+                                    "nXduZZCDcoxyHzNVY0CeRASDYPQII5lG"
+                            );
+                            String firstIp = "";
+                            String requestIp;
+                            HttpShortConnection     httpClient = new HttpShortConnection();
+                            try {
+                                // 获取第一个客户端IP
+                                firstIp = client.getFirstExternalClientIp();
+                                System.out.println("第一个客户端IP: " + firstIp);
+                            } catch (IOException e) {
+                                System.err.println("请求失败: " + e.getMessage());
+                            }
+
+                            if(!firstIp.isEmpty())
+                            {
+                                // 初始化HTTP客户端
+                                requestIp = "http://" + firstIp + ":18081";
+                                Log.e(TAG, "Request requestIp:" + requestIp);
+                            }else {
+                                return;
+                            }
+
+                            // 准备请求数据
+                            String jsonBody = "{\"eventtype\":\"STOPRECORDMP4\",\"value\":\"1\"}";
+                            // 发送请求
+                            httpClient.sendJsonRequest(requestIp, jsonBody, new HttpShortConnection.ResponseCallback() {
+                                            @Override
+                                            public void onSuccess(String response) {
+                                                Log.i(TAG, "停止录制MP4请求成功: " + response);
+                                            }
+
+                                            @Override
+                                            public void onFailure(String error) {
+                                                Log.e(TAG, "停止录制MP4请求失败: " + error);
+                                            }
+                                        });
+                                Log.d(TAG, "停止录制MP4按钮点击");
+                            }
+                    }).start();
+            }
+        });
     }
 
     // 添加延时开始录制的方法
@@ -216,7 +322,7 @@ public class Camera2Activity extends Activity {
         mDelayRunnable = new Runnable() {
             @Override
             public void run() {
-                startRecording(); // 实际开始录制
+                startPushing(); // 实际开始录制
             }
         };
 
@@ -772,7 +878,7 @@ public class Camera2Activity extends Activity {
         }
     }
 
-    private void startRecording() {
+    private void startPushing() {
         if (mCameraDevice == null) {
             Toast.makeText(this, "相机未初始化", Toast.LENGTH_SHORT).show();
             return;
@@ -826,7 +932,7 @@ public class Camera2Activity extends Activity {
             mEncoderSurface = mH264Encoder.start();
             
             mIsRecording = true;
-            mBtnStart.setText("停止推流");
+            mBtnStartpush.setText("停止推流");
             //mBtnSwitch.setEnabled(false);
             
             // 重新创建相机会话，包含编码器Surface
@@ -840,7 +946,7 @@ public class Camera2Activity extends Activity {
         }
     }
 
-    private void stopRecording() {
+    private void stopPushing() {
         if (mH264Encoder != null) {
             mH264Encoder.stop();
             mH264Encoder = null;
@@ -852,7 +958,7 @@ public class Camera2Activity extends Activity {
         }
         
         mIsRecording = false;
-        mBtnStart.setText("开始推流");
+        mBtnStartpush.setText("开始推流");
         //mBtnSwitch.setEnabled(true);
         
         // 重新创建相机会话，移除编码器Surface
@@ -936,7 +1042,7 @@ public class Camera2Activity extends Activity {
          mDestroyting = true;
          Toast.makeText(this, "当前界面不允许退出", Toast.LENGTH_SHORT).show();
          if (mIsRecording) {
-             stopRecording();
+             stopPushing();
          }
     }
 }

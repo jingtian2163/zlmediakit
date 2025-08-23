@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true" />
 
+    <!-- 按钮容器 - 垂直布局支持两行 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,75 +18,106 @@
         android:layout_marginBottom="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
-        android:weightSum="5"
-        android:baselineAligned="false">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_start_record"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:text="开始\n推流"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:backgroundTint="#FF4444" />
+        <!-- 第一行按钮：推流、放大、缩小、补光 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:layout_marginBottom="8dp">
 
-        <Button
-            android:id="@+id/btn_scale_big"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:text="放大"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:maxLines="1"
-            android:gravity="center"
-            android:backgroundTint="#4444FF" />
+            <Button
+                android:id="@+id/btn_start_push"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="开始\n推流"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#FF4444" />
 
-        <Button
-            android:id="@+id/btn_scale_small"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:text="缩小"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:maxLines="1"
-            android:gravity="center"
-            android:backgroundTint="#4444FF" />
+            <Button
+                android:id="@+id/btn_scale_big"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="放大"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#4444FF" />
 
-        <Button
-            android:id="@+id/btn_flash"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:text="开启补光"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:maxLines="1"
-            android:gravity="center"
-            android:backgroundTint="#4444FF" />
+            <Button
+                android:id="@+id/btn_scale_small"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="缩小"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#4444FF" />
 
-        <Button
-            android:id="@+id/btn_takepic"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:text="拍照"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:maxLines="1"
-            android:gravity="center"
-            android:backgroundTint="#4444FF" />
+            <Button
+                android:id="@+id/btn_flash"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="补光"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#FFAA44" />
+
+        </LinearLayout>
+
+        <!-- 第二行按钮：开始录制MP4、停止录制MP4、拍照 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/btn_start_record_mp4"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="开始录制"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#FF6666" />
+
+            <Button
+                android:id="@+id/btn_stop_record_mp4"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="停止录制"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#FF9999" />
+
+            <Button
+                android:id="@+id/btn_takepic"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="拍照"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#44FF44" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
